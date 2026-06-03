@@ -1,0 +1,130 @@
+{% load static %}
+
+<section class="service-detail" aria-labelledby="service-detail-title">
+    <div class="service-detail-copy">
+        <div class="service-detail-heading">
+            {% if solution.id == "vulture_uavs" %}
+                <h1 id="service-detail-title" class="service-vulture-title">
+                    <span>VULTURE</span>
+                    <small>U A V</small>
+                </h1>
+            {% elif solution.id == "tactical_data_link" %}
+                <h1 id="service-detail-title" class="service-tactical-title">
+                    <small>Tactical</small>
+                    <span>Data Link</span>
+                    <small>Solutions</small>
+                </h1>
+            {% else %}
+                <h1 id="service-detail-title">{{ solution.title }}</h1>
+            {% endif %}
+        </div>
+
+        <p class="service-detail-description">{{ solution.description|linebreaksbr }}</p>
+
+        <a href="{% url 'solutions' %}" class="service-secondary-btn">OUR SOLUTIONS</a>
+    </div>
+
+    <div class="service-detail-visual{% if solution.show_visual_nav %} service-detail-carousel{% endif %}">
+        {% if solution.visuals.0.image %}
+            <img
+                class="service-carousel-image"
+                data-service-image
+                data-static-prefix="{% get_static_prefix %}"
+                src="{% static solution.visuals.0.image %}"
+                alt="{{ solution.visuals.0.title }}"
+            >
+        {% elif solution.image %}
+            <img src="{% static solution.image %}" alt="{{ solution.title }} system illustration">
+        {% elif solution.illustration_type == "vulture_svg" %}
+            <svg class="service-vulture-drone" viewBox="0 0 520 430" aria-label="{{ solution.title }} system illustration">
+                <g class="service-wire">
+                    <path d="M260 30 C242 30 229 122 229 164 L229 198 C229 238 244 265 260 278 C276 265 291 238 291 198 L291 164 C291 122 278 30 260 30 Z" />
+                    <rect x="232" y="130" width="56" height="50" rx="4" />
+                    <rect x="226" y="164" width="68" height="170" rx="3" />
+                    <path d="M232 279 L204 345 L204 401 L238 401 L238 360" />
+                    <path d="M288 279 L316 345 L316 401 L282 401 L282 360" />
+                    <path d="M229 201 C174 217 143 211 104 211" />
+                    <path d="M291 201 C346 217 377 211 416 211" />
+                    <rect x="92" y="202" width="70" height="52" rx="5" />
+                    <rect x="358" y="202" width="70" height="52" rx="5" />
+                    <ellipse cx="127" cy="193" rx="97" ry="6" />
+                    <ellipse cx="393" cy="193" rx="97" ry="6" />
+                    <line x1="30" y1="193" x2="224" y2="193" />
+                    <line x1="296" y1="193" x2="490" y2="193" />
+                    <path d="M216 310 L185 292 L178 348 L140 316 L126 358" />
+                    <path d="M304 310 L335 292 L342 348 L380 316 L394 358" />
+                    <rect x="247" y="324" width="26" height="14" />
+                    <rect x="236" y="210" width="48" height="78" rx="4" />
+                    <rect x="243" y="218" width="34" height="62" />
+                    <circle cx="260" cy="78" r="7" />
+                    <circle cx="260" cy="281" r="3" />
+                    <circle cx="229" cy="210" r="3" />
+                    <circle cx="291" cy="210" r="3" />
+                    <circle cx="127" cy="193" r="10" />
+                    <circle cx="393" cy="193" r="10" />
+                </g>
+            </svg>
+        {% elif solution.illustration_type == "skyguard_svg" %}
+            <svg class="service-skyguard-radar" viewBox="0 0 360 430" aria-label="{{ solution.title }} system illustration">
+                <g class="service-wire">
+                    <path d="M68 116 C68 63 292 63 292 116 L292 166 C292 198 68 198 68 166 Z" />
+                    <path d="M68 116 C68 148 292 148 292 116" />
+                    <path d="M68 141 C68 172 292 172 292 141" />
+                    <path d="M68 166 C68 196 292 196 292 166" />
+                    <path d="M83 89 C98 122 98 168 83 184" />
+                    <path d="M121 73 C132 118 132 174 121 193" />
+                    <path d="M160 65 C166 118 166 176 160 197" />
+                    <path d="M200 65 C194 118 194 176 200 197" />
+                    <path d="M239 73 C228 118 228 174 239 193" />
+                    <path d="M277 89 C262 122 262 168 277 184" />
+                    <line x1="68" y1="116" x2="292" y2="116" />
+                    <line x1="76" y1="91" x2="284" y2="91" />
+                    <line x1="100" y1="76" x2="260" y2="76" />
+                    <path d="M108 196 L118 228 L260 228 L270 196" />
+                    <path d="M126 228 L113 255 L115 270 L139 270 L149 228" />
+                    <path d="M252 228 L265 255 L263 270 L239 270 L229 228" />
+                    <path d="M155 228 L148 316" />
+                    <path d="M185 228 L185 330" />
+                    <path d="M215 228 L222 316" />
+                    <path d="M148 316 L101 402" />
+                    <path d="M185 330 L185 390" />
+                    <path d="M222 316 L270 402" />
+                    <path d="M101 402 L92 415 L119 415 L130 401" />
+                    <path d="M270 402 L279 415 L251 415 L239 401" />
+                    <path d="M185 390 L173 407 L197 407 Z" />
+                    <line x1="101" y1="402" x2="168" y2="367" />
+                    <line x1="270" y1="402" x2="202" y2="367" />
+                    <line x1="148" y1="316" x2="185" y2="330" />
+                    <line x1="222" y1="316" x2="185" y2="330" />
+                    <rect x="161" y="228" width="44" height="86" rx="4" />
+                    <rect x="168" y="238" width="30" height="68" />
+                    <circle cx="183" cy="218" r="7" />
+                    <line x1="183" y1="314" x2="183" y2="390" />
+                    <line x1="170" y1="246" x2="196" y2="246" />
+                    <line x1="170" y1="256" x2="196" y2="256" />
+                    <line x1="170" y1="266" x2="196" y2="266" />
+                    <line x1="170" y1="276" x2="196" y2="276" />
+                    <line x1="170" y1="286" x2="196" y2="286" />
+                    <line x1="170" y1="296" x2="196" y2="296" />
+                </g>
+            </svg>
+        {% endif %}
+
+        {% if solution.show_visual_nav %}
+            <button class="service-visual-arrow service-visual-arrow-prev" type="button" aria-label="Previous {{ solution.title }} visual">&lsaquo;</button>
+            <button class="service-visual-arrow service-visual-arrow-next" type="button" aria-label="Next {{ solution.title }} visual">&rsaquo;</button>
+        {% endif %}
+
+        {% if solution.visual_caption %}
+            <div class="service-visual-caption" data-service-caption>{{ solution.visual_caption }}</div>
+        {% endif %}
+
+        <button class="service-specs-btn" type="button" data-specs-product="{{ solution.title }}">
+            {{ solution.cta_text }}
+        </button>
+    </div>
+</section>
+
+{% if solution.visuals %}
+    {{ solution.visuals|json_script:"service-visual-data" }}
+{% endif %}

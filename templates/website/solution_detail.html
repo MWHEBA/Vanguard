@@ -1,0 +1,8 @@
+{% extends "website/base.html" %}
+
+{% block title %}{{ solution.title }}{% endblock %}
+{% block page_class %}service-detail-page service-detail-{{ solution.id }}{% endblock %}
+
+{% block content %}
+    {% include "website/partials/service_detail_content.html" %}
+{% endblock %}

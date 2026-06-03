@@ -1,0 +1,119 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Contact Us{% endblock %}
+{% block page_class %}contact-page-bg{% endblock %}
+
+{% block content %}
+<!-- الجانب الأيسر: فورم التواصل الأفقي التفاعلي -->
+<div class="content-left" style="width: 50%; justify-content: center; align-items: stretch; padding-top: 0;">
+    <!-- عرض رسائل النجاح أو الفشل الخاصة بالفورم -->
+    {% if messages %}
+    <div class="messages-container" style="margin-bottom: 20px;">
+        {% for message in messages %}
+        <div class="message-alert"
+            style="border: 1px solid var(--accent-red); background-color: var(--bg-secondary); color: var(--text-white); padding: 12px; font-family: monospace; font-size: 0.8rem; text-align: center; text-transform: uppercase;">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'contact' %}" class="contact-form-container"
+        style="display: flex; flex-direction: column; gap: 20px;">
+        {% csrf_token %}
+
+        <!-- حقل المنظمة -->
+        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
+            <label class="form-label"
+                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">ORGANIZATION</label>
+            <div style="flex-grow: 1;">
+                {{ form.organization }}
+            </div>
+        </div>
+
+        <!-- حقل الاسم -->
+        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
+            <label class="form-label"
+                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">NAME</label>
+            <div style="flex-grow: 1;">
+                {{ form.name }}
+            </div>
+        </div>
+
+        <!-- حقل البريد الإلكتروني -->
+        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
+            <label class="form-label"
+                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">EMAIL</label>
+            <div style="flex-grow: 1;">
+                {{ form.email }}
+            </div>
+        </div>
+
+        <!-- حقل رقم الهاتف مع كود وعلم مصر -->
+        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
+            <label class="form-label"
+                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">PHONE</label>
+            <div style="flex-grow: 1; display: flex; gap: 0; align-items: center;">
+                <div class="country-selector">
+                    <!-- علم مصر -->
+                    <svg width="22" height="15" viewBox="0 0 3 2"
+                        style="display: inline-block; vertical-align: middle;">
+                        <rect width="3" height="0.67" y="0" fill="#c1272d" />
+                        <rect width="3" height="0.67" y="0.67" fill="#fff" />
+                        <rect width="3" height="0.67" y="1.33" fill="#000" />
+                        <polygon points="1.5,0.9 1.6,1.1 1.4,1.1" fill="#e6c229" />
+                    </svg>
+                    <span
+                        style="color: var(--text-white); font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 600;">+20</span>
+                    <span style="color: var(--text-muted); font-size: 0.65rem; margin-left: 2px;">v</span>
+                </div>
+                <div style="flex-grow: 1;">
+                    {{ form.phone }}
+                </div>
+            </div>
+        </div>
+
+        <!-- حقل الرسالة - كامل العرض -->
+        <div class="message-row" style="width: 100%; margin-top: 10px;">
+            {{ form.message }}
+        </div>
+
+        <!-- زر الإرسال محاذى لليمين أسفل التكست إريا -->
+        <div class="submit-row">
+            <button type="submit" class="submit-btn-rect">SEND</button>
+        </div>
+    </form>
+</div>
+
+<!-- الجانب الأيمن: واير فريم الخريطة مع الروابط التكتيكية وبيانات الاتصال والفوتر المدمج -->
+<div class="content-right"
+    style="width: 50%; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; padding-top: 40px; padding-bottom: 20px;">
+    <!-- الخريطة التكتيكية لإفريقيا والشرق الأوسط -->
+    <div class="illustration-container"
+        style="width: 100%; max-width: 509px; height: auto; flex-grow: 1; display: flex; justify-content: flex-end; align-items: center; overflow: hidden;">
+        <img src="{% static 'website/images/v2070_311.png' %}" alt="Operations Map"
+            style="width: 100%; height: auto; display: block; max-width: 509px; max-height: 589px;" />
+    </div>
+
+    <!-- معلومات الاتصال وحقوق الملكية مدمجة بالجانب الأيمن السفلي ومحاذاة لليمين -->
+    <div class="contact-footer-block"
+        style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: 10px;">
+        <!-- لوجو لينكد إن العسكري -->
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="linkedin-link-icon"
+            style="display: inline-flex; align-items: center; justify-content: center; width: 41px; height: auto; transition: all var(--transition-fast); text-decoration: none;">
+            <img src="{% static 'website/images/linkedin.png' %}" alt="LinkedIn"
+                style="width: 60px; height: auto; display: block;" />
+        </a>
+
+        <!-- معلومات الإيميل والحقوق -->
+        <a href="mailto:INFO@VANGUARD.EG" class="contact-email-link"
+            style="color: var(--text-desc); text-decoration: none; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 600; letter-spacing: 0.05em; transition: color var(--transition-fast); display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display: inline-block;">
+                <rect x="1" y="1" width="16" height="12" rx="1.5" />
+                <polyline points="1,2 9,8 17,2" />
+            </svg>
+            INFO@VANGUARD.EG
+        </a>
+    </div>
+</div>
+{% endblock %}

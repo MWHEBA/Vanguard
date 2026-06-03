@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Technologies | {% block title %}Defense Systems{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&family=Lalezar&family=Montserrat:wght@300;400;600&display=swap">
+    <link rel="icon" type="image/png" href="{% static 'website/images/Icon.png' %}">
+    <!-- استدعاء ملفات التنسيق الرئيسية -->
+    <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="viewport-page {% block page_class %}{% endblock %}">
+        <!-- شبكة التصميم التقنية لإعطاء طابع هندسي عسكري -->
+        <div class="technical-grid"></div>
+
+        <!-- رأس الصفحة المشترك -->
+        <header>
+            <div class="logo-container">
+                <a href="{% url 'home' %}">
+                    <!-- لوجو فانجارد تكنولوجيز الأصلي من التصميم -->
+                    <img src="https://api.builder.io/api/v1/image/assets/01911da14ded49aeae63dafe748182e7/35fbba448c0e707b872a4578bc9d3c87b156075c?placeholderIfAbsent=true" alt="Vanguard Technologies" style="width: 273px; height: auto; display: block;" />
+                </a>
+            </div>
+            <div class="nav-cta-container">
+                {% if current_page == 'contact' %}
+                    <a href="{% url 'solutions' %}" class="nav-cta-btn">OUR SOLUTIONS</a>
+                {% else %}
+                    <a href="{% url 'contact' %}" class="nav-cta-btn">CONTACT US</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- محتوى الصفحة المتغير -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- تذييل الصفحة المشترك -->
+        <footer>
+            <div class="footer-copyright">
+                ALL RIGHTS RESERVED 2026 &copy; VANGUARD TECHNOLOGIES
+            </div>
+        </footer>
+    </div>
+
+    <!-- استدعاء ملف الجافا سكريبت الرئيسي -->
+    <div class="specs-modal" data-specs-modal aria-hidden="true">
+        <div class="specs-modal-panel" role="dialog" aria-modal="true" aria-labelledby="specs-modal-title">
+            <button class="specs-modal-close" type="button" data-specs-close aria-label="Close specs request">&times;</button>
+            <div class="specs-modal-product" id="specs-modal-title" data-specs-modal-product>VANCOM</div>
+
+            <form class="specs-modal-form" method="POST" action="{% url 'contact' %}">
+                {% csrf_token %}
+                <input type="hidden" name="message" data-specs-message value="GET SPECS request">
+
+                <div class="specs-modal-row">
+                    <label class="specs-modal-label" for="specs-name">NAME</label>
+                    <input class="specs-modal-input" id="specs-name" name="name" type="text" autocomplete="name" required>
+                </div>
+
+                <div class="specs-modal-row">
+                    <label class="specs-modal-label" for="specs-company">COMPANY</label>
+                    <input class="specs-modal-input" id="specs-company" name="organization" type="text" autocomplete="organization" required>
+                </div>
+
+                <div class="specs-modal-row">
+                    <label class="specs-modal-label" for="specs-email">EMAIL</label>
+                    <input class="specs-modal-input" id="specs-email" name="email" type="email" autocomplete="email" required>
+                </div>
+
+                <div class="specs-modal-row">
+                    <label class="specs-modal-label" for="specs-phone">PHONE</label>
+                    <div class="specs-modal-phone">
+                        <div class="specs-modal-country" aria-hidden="true">
+                            <svg width="58" height="40" viewBox="0 0 3 2" focusable="false">
+                                <rect width="3" height="0.67" y="0" fill="#c1272d" />
+                                <rect width="3" height="0.67" y="0.67" fill="#fff" />
+                                <rect width="3" height="0.67" y="1.33" fill="#000" />
+                                <polygon points="1.5,0.9 1.6,1.1 1.4,1.1" fill="#e6c229" />
+                            </svg>
+                            <span>+20</span>
+                            <span class="specs-modal-caret">v</span>
+                        </div>
+                        <input class="specs-modal-input specs-modal-phone-input" id="specs-phone" name="phone" type="tel" autocomplete="tel" required>
+                    </div>
+                </div>
+
+                <button class="specs-modal-submit" type="submit">GET SPECS</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'website/js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
