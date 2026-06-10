@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Dashboard | {% block title %}Operations{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'website/images/Icon.png' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-shell">
+        <aside class="dashboard-sidebar">
+            <a class="dashboard-brand" href="{% url 'dashboard:index' %}">
+                <span class="brand-mark">VT</span>
+                <span>
+                    <strong>Vanguard</strong>
+                    <small>Operations</small>
+                </span>
+            </a>
+            <nav class="dashboard-nav" aria-label="Dashboard navigation">
+                <section class="nav-group" aria-labelledby="nav-operations">
+                    <h2 id="nav-operations">Operations</h2>
+                    <a class="{% if current_dashboard_page == 'overview' %}is-active{% endif %}" href="{% url 'dashboard:index' %}">Overview</a>
+                    <a class="{% if current_dashboard_page == 'inquiries' %}is-active{% endif %}" href="{% url 'dashboard:inquiries' %}">Inbox</a>
+                    <a class="{% if current_dashboard_page == 'reports' %}is-active{% endif %}" href="{% url 'dashboard:reports' %}">Reports</a>
+                </section>
+
+                <section class="nav-group" aria-labelledby="nav-content">
+                    <h2 id="nav-content">Content</h2>
+                    <a class="{% if current_dashboard_page == 'home' %}is-active{% endif %}" href="{% url 'dashboard:home_content' %}">Home</a>
+                    <a class="{% if current_dashboard_page == 'solutions' %}is-active{% endif %}" href="{% url 'dashboard:solutions' %}">Solutions</a>
+                    <a class="{% if current_dashboard_page == 'branding' %}is-active{% endif %}" href="{% url 'dashboard:branding' %}">Branding</a>
+                    <a class="{% if current_dashboard_page == 'settings' %}is-active{% endif %}" href="{% url 'dashboard:settings' %}">Settings</a>
+                </section>
+
+                <section class="nav-group" aria-labelledby="nav-admin">
+                    <h2 id="nav-admin">Administration</h2>
+                    <a class="{% if current_dashboard_page == 'users' %}is-active{% endif %}" href="{% url 'dashboard:users' %}">Users</a>
+                </section>
+
+                <section class="nav-group" aria-labelledby="nav-external">
+                    <h2 id="nav-external">External</h2>
+                    <a href="{% url 'home' %}">Public Site</a>
+                </section>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="dashboard-content">
+            <header class="dashboard-topbar">
+                <div class="topbar-title">
+                    <p class="dashboard-kicker">{% block kicker %}Vanguard control surface{% endblock %}</p>
+                    <h1>{% block heading %}Operations Dashboard{% endblock %}</h1>
+                </div>
+                <div class="topbar-actions" aria-label="Dashboard quick actions">
+                    <span class="system-state"><span aria-hidden="true"></span>Operational</span>
+                    <a class="topbar-link" href="{% url 'dashboard:inquiries' %}?status=new">New queue</a>
+                    <a class="topbar-link" href="{% url 'dashboard:reports' %}">Reports</a>
+                    <a class="topbar-link" href="{% url 'home' %}">View site</a>
+                    <details class="account-menu">
+                        <summary aria-label="Open account menu">
+                            <span class="account-avatar" aria-hidden="true">{{ request.user.get_username|first|upper }}</span>
+                            <span class="account-name">{{ request.user.get_username }}</span>
+                            <span class="account-caret" aria-hidden="true">v</span>
+                        </summary>
+                        <div class="account-dropdown">
+                            <div class="account-card">
+                                <span class="account-avatar large" aria-hidden="true">{{ request.user.get_username|first|upper }}</span>
+                                <div>
+                                    <strong>{{ request.user.get_username }}</strong>
+                                    <small>Staff operator</small>
+                                </div>
+                            </div>
+                            <a href="{% url 'home' %}">Public Site</a>
+                            <a href="{% url 'dashboard:settings' %}">Settings</a>
+                            <a class="danger-link" href="{% url 'admin:logout' %}?next={% url 'home' %}">Sign out</a>
+                        </div>
+                    </details>
+                </div>
+            </header>
+
+            {% if messages %}
+                <div class="messages" role="status">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+
+            <footer class="dashboard-footer">
+                <div>
+                    <strong>Vanguard Operations Dashboard</strong>
+                    <span>Internal staff console</span>
+                </div>
+                <span class="footer-copy">All rights reserved {% now "Y" %}</span>
+            </footer>
+            </div>
+        </main>
+    </div>
+    <script src="{% static 'dashboard/js/rich-text-editor.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

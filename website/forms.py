@@ -1,5 +1,7 @@
 from django import forms
 
+from .models import ContactInquiry
+
 # فورم التواصل للعملاء والشركات المهتمة
 class ContactForm(forms.Form):
     organization = forms.CharField(
@@ -42,3 +44,16 @@ class ContactForm(forms.Form):
             'rows': 6
         })
     )
+    inquiry_type = forms.ChoiceField(
+        choices=ContactInquiry.INQUIRY_TYPE_CHOICES,
+        required=False,
+        widget=forms.HiddenInput()
+    )
+    requested_solution_slug = forms.SlugField(
+        max_length=120,
+        required=False,
+        widget=forms.HiddenInput()
+    )
+
+    def clean_inquiry_type(self):
+        return self.cleaned_data.get("inquiry_type") or ContactInquiry.INQUIRY_CONTACT

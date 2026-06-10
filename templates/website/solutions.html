@@ -14,18 +14,11 @@
     <div class="solutions-map" aria-label="Vanguard solutions map">
         <svg class="solutions-wireframe-svg" viewBox="0 0 1000 820" aria-label="Vanguard solutions map">
             <g class="solution-panels">
-                <a class="solution-link-vulture" href="{% url 'vulture_uavs' %}" aria-label="Vulture UAVs">
-                    <polygon class="solution-panel" points="505,146 711,302 438,404" />
-                </a>
-                <a class="solution-link-skyguard" href="{% url 'skyguard' %}" aria-label="SkyGuard Solutions">
-                    <polygon class="solution-panel" points="438,404 711,302 660,604" />
-                </a>
-                <a class="solution-link-tdl" href="{% url 'tactical_data_link' %}" aria-label="Tactical Data Link Solutions">
-                    <polygon class="solution-panel" points="438,404 660,604 415,674" />
-                </a>
-                <a class="solution-link-vancom" href="{% url 'vancom' %}" aria-label="VANCOM Computing Solutions">
-                    <polygon class="solution-panel" points="711,302 893,499 660,604" />
-                </a>
+                {% for item in solution_map_items %}
+                    <a class="{{ item.link_class }}" href="{% url item.url_name %}" aria-label="{{ item.title }}">
+                        <polygon class="solution-panel" points="{{ item.polygon_points }}" />
+                    </a>
+                {% endfor %}
             </g>
             <g class="solutions-wire-lines">
                 <polyline points="505,146 795,205 893,499 704,734 415,674 315,376 505,146" />
@@ -43,24 +36,13 @@
                 <line x1="660" y1="604" x2="893" y2="499" />
             </g>
             <g class="solution-svg-labels">
-                <text class="solution-svg-label solution-svg-label-vulture" x="552" y="266">
-                    <tspan x="552" dy="0">VULTURE</tspan>
-                    <tspan x="552" dy="37">UAVs</tspan>
-                </text>
-                <text class="solution-svg-label solution-svg-label-skyguard" x="603" y="437">
-                    <tspan x="603" dy="0">SkyGuard</tspan>
-                    <tspan x="603" dy="37">Solutions</tspan>
-                </text>
-                <text class="solution-svg-label solution-svg-label-tdl" x="504" y="524">
-                    <tspan x="504" dy="0">Tactical</tspan>
-                    <tspan x="504" dy="37">Data Link</tspan>
-                    <tspan x="504" dy="37">Solutions</tspan>
-                </text>
-                <text class="solution-svg-label solution-svg-label-vancom" x="755" y="431">
-                    <tspan x="755" dy="0">VANCOM</tspan>
-                    <tspan x="755" dy="37">Computing</tspan>
-                    <tspan x="755" dy="37">Solutions</tspan>
-                </text>
+                {% for item in solution_map_items %}
+                    <text class="solution-svg-label {{ item.label_class }}" x="{{ item.label_x }}" y="{{ item.label_y }}">
+                        {% for line in item.label_lines %}
+                            <tspan x="{{ item.label_x }}" dy="{% if forloop.first %}0{% else %}37{% endif %}">{{ line }}</tspan>
+                        {% endfor %}
+                    </text>
+                {% endfor %}
             </g>
         </svg>
     </div>

@@ -1,18 +1,28 @@
 {% extends "website/base.html" %}
-{% block title %}Trusted Defense Solutions{% endblock %}
+{% block title %}{% if home_content %}{{ home_content.browser_title }}{% else %}Trusted Defense Solutions{% endif %}{% endblock %}
 {% block page_class %}home-page-bg{% endblock %}
 
 {% block content %}
 <!-- الجانب الأيسر: العنوان والنصوص التعريفية من ملف الفيغما -->
 <div class="content-left">
     <h1 class="page-title">
-        TRUSTED SOLUTIONS<br>
-        ENGINEERED FOR MISSION SUCCESS.
+        {% if home_content %}
+            {{ home_content.hero_title|linebreaksbr }}
+        {% else %}
+            TRUSTED SOLUTIONS<br>
+            ENGINEERED FOR MISSION SUCCESS.
+        {% endif %}
     </h1>
-    <p class="page-description">
-        Vanguard Technologies is an advanced defense technology company delivering integrated, smart, reliable, scalable mission-critical security special solutions.
-    </p>
-    <a href="{% url 'solutions' %}" class="primary-btn">OUR SOLUTIONS</a>
+    <div class="page-description">
+        {% if home_content %}
+            {{ home_content.hero_description|safe }}
+        {% else %}
+            Vanguard Technologies is an advanced defense technology company delivering integrated, smart, reliable, scalable mission-critical security special solutions.
+        {% endif %}
+    </div>
+    <a href="{% url 'solutions' %}" class="primary-btn">
+        {% if home_content %}{{ home_content.cta_text }}{% else %}OUR SOLUTIONS{% endif %}
+    </a>
 </div>
 
 <!-- الجانب الأيمن: فارغ لأن الخلفية تم تفعيلها وبها رسمة الواير فريم -->

@@ -1,0 +1,85 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Reports{% endblock %}
+{% block heading %}Operational Reports{% endblock %}
+{% block kicker %}Lightweight inquiry intelligence{% endblock %}
+
+{% block content %}
+<section class="metric-grid" aria-label="Report metrics">
+    <a class="metric-card" href="{% url 'dashboard:inquiries' %}">
+        <span>Total inquiries</span>
+        <strong>{{ metrics.total_inquiries }}</strong>
+        <em>All-time intake</em>
+    </a>
+    <a class="metric-card" href="{% url 'dashboard:inquiries' %}">
+        <span>Last 7 days</span>
+        <strong>{{ metrics.last_7_days }}</strong>
+        <em>Recent demand</em>
+    </a>
+    <a class="metric-card" href="{% url 'dashboard:inquiries' %}?type=specs">
+        <span>Specs requests</span>
+        <strong>{{ metrics.specs }}</strong>
+        <em>Product interest</em>
+    </a>
+    <a class="metric-card" href="{% url 'dashboard:solutions' %}">
+        <span>Active solutions</span>
+        <strong>{{ metrics.active_solutions }}</strong>
+        <em>{{ metrics.inactive_solutions }} inactive</em>
+    </a>
+</section>
+
+<div class="report-grid">
+    <section class="panel">
+        <h2>Status Breakdown</h2>
+        <div class="report-list">
+            {% for row in status_rows %}
+                <a class="report-row" href="{% url 'dashboard:inquiries' %}?status={{ row.status }}">
+                    <span>{{ row.label }}</span>
+                    <strong>{{ row.total }}</strong>
+                    <div class="report-bar"><span style="width: {{ row.percent }}%"></span></div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Type Breakdown</h2>
+        <div class="report-list">
+            {% for row in type_rows %}
+                <a class="report-row" href="{% url 'dashboard:inquiries' %}?type={{ row.type }}">
+                    <span>{{ row.label }}</span>
+                    <strong>{{ row.total }}</strong>
+                    <div class="report-bar"><span style="width: {{ row.percent }}%"></span></div>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h2>Inquiry Demand By Solution</h2>
+        <a class="button secondary" href="{% url 'dashboard:solutions' %}">Manage solutions</a>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Solution</th>
+                    <th>Inquiries</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in solution_rows %}
+                    <tr>
+                        <td>{{ row.requested_solution__title }}</td>
+                        <td>{{ row.total }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="2" class="empty-row">No solution-linked inquiries yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

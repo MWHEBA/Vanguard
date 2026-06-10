@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanguard Technologies | {% block title %}Defense Systems{% endblock %}</title>
+    <title>{% if site_settings %}{{ site_settings.site_name }}{% else %}Vanguard Technologies{% endif %} | {% block title %}Defense Systems{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&family=Lalezar&family=Montserrat:wght@300;400;600&display=swap">
-    <link rel="icon" type="image/png" href="{% static 'website/images/Icon.png' %}">
+    <!-- Flag Icons CSS for country flags -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
+    <link rel="icon" type="image/png" href="{{ site_favicon_url }}">
     <!-- استدعاء ملفات التنسيق الرئيسية -->
     <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
     {% block extra_head %}{% endblock %}
@@ -22,8 +24,12 @@
         <header>
             <div class="logo-container">
                 <a href="{% url 'home' %}">
-                    <!-- لوجو فانجارد تكنولوجيز الأصلي من التصميم -->
-                    <img src="https://api.builder.io/api/v1/image/assets/01911da14ded49aeae63dafe748182e7/35fbba448c0e707b872a4578bc9d3c87b156075c?placeholderIfAbsent=true" alt="Vanguard Technologies" style="width: 273px; height: auto; display: block;" />
+                    <!-- لوجو فانجارد تكنولوجيز من الداشبورد أو اللوجو الافتراضي -->
+                    {% if site_logo_url %}
+                        <img src="{{ site_logo_url }}" alt="{% if site_settings %}{{ site_settings.site_name }}{% else %}Vanguard Technologies{% endif %}" style="width: 273px; height: auto; display: block;" />
+                    {% else %}
+                        <img src="https://api.builder.io/api/v1/image/assets/01911da14ded49aeae63dafe748182e7/35fbba448c0e707b872a4578bc9d3c87b156075c?placeholderIfAbsent=true" alt="Vanguard Technologies" style="width: 273px; height: auto; display: block;" />
+                    {% endif %}
                 </a>
             </div>
             <div class="nav-cta-container">
@@ -43,7 +49,7 @@
         <!-- تذييل الصفحة المشترك -->
         <footer>
             <div class="footer-copyright">
-                ALL RIGHTS RESERVED 2026 &copy; VANGUARD TECHNOLOGIES
+                {% if site_settings %}{{ site_settings.footer_text }}{% else %}ALL RIGHTS RESERVED 2026 &copy; VANGUARD TECHNOLOGIES{% endif %}
             </div>
         </footer>
     </div>
@@ -56,6 +62,8 @@
 
             <form class="specs-modal-form" method="POST" action="{% url 'contact' %}">
                 {% csrf_token %}
+                <input type="hidden" name="inquiry_type" value="specs">
+                <input type="hidden" name="requested_solution_slug" data-specs-solution-slug value="">
                 <input type="hidden" name="message" data-specs-message value="GET SPECS request">
 
                 <div class="specs-modal-row">
@@ -76,15 +84,11 @@
                 <div class="specs-modal-row">
                     <label class="specs-modal-label" for="specs-phone">PHONE</label>
                     <div class="specs-modal-phone">
-                        <div class="specs-modal-country" aria-hidden="true">
-                            <svg width="58" height="40" viewBox="0 0 3 2" focusable="false">
-                                <rect width="3" height="0.67" y="0" fill="#c1272d" />
-                                <rect width="3" height="0.67" y="0.67" fill="#fff" />
-                                <rect width="3" height="0.67" y="1.33" fill="#000" />
-                                <polygon points="1.5,0.9 1.6,1.1 1.4,1.1" fill="#e6c229" />
-                            </svg>
-                            <span>+20</span>
-                            <span class="specs-modal-caret">v</span>
+                        <div class="country-selector specs-modal-country-selector" data-country-code="+20">
+                            <!-- علم مصر -->
+                            <span class="fi fi-eg" style="font-size: 18px;"></span>
+                            <span style="color: var(--text-white); font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 600;">+20</span>
+                            <span style="color: var(--text-muted); font-size: 0.65rem; margin-left: 2px;">v</span>
                         </div>
                         <input class="specs-modal-input specs-modal-phone-input" id="specs-phone" name="phone" type="tel" autocomplete="tel" required>
                     </div>
@@ -95,6 +99,7 @@
         </div>
     </div>
 
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="{% static 'website/js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>

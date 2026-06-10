@@ -1,0 +1,43 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Home Content{% endblock %}
+{% block heading %}Home Page Content{% endblock %}
+{% block kicker %}Public landing content{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+    <section class="panel form-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Edit Public Home</h2>
+                <p class="panel-subtitle">Controls the active hero copy used on the public landing page.</p>
+            </div>
+            <a class="button secondary" href="{% url 'home' %}">Preview public home</a>
+        </div>
+        <form class="stacked-form" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <label class="{% if field.field.widget.input_type == 'checkbox' %}check-row{% endif %}">
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {{ field.errors }}
+                </label>
+            {% endfor %}
+            <div class="sticky-actions">
+                <button class="button" type="submit">Save home content</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Current Preview</h2>
+        <div class="content-preview">
+            <span>{{ content_object.browser_title }}</span>
+            <strong>{{ content_object.hero_title|linebreaksbr }}</strong>
+            <p>{{ content_object.hero_description }}</p>
+            <em>{{ content_object.cta_text }}</em>
+        </div>
+    </section>
+</div>
+{% endblock %}

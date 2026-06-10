@@ -1,0 +1,119 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Inbox{% endblock %}
+{% block heading %}Inquiries Inbox{% endblock %}
+{% block kicker %}Search, filter, and triage{% endblock %}
+
+{% block content %}
+<nav class="quick-tabs" aria-label="Inbox quick filters">
+    {% for key, label, url in tabs %}
+        <a class="{% if active_tab == key %}is-active{% endif %}" href="{{ url }}">{{ label }}</a>
+    {% endfor %}
+</nav>
+
+<section class="panel">
+    <form class="filter-bar" method="get">
+        <input class="dashboard-input" type="search" name="q" value="{{ filters.q }}" placeholder="Search name, organization, email">
+        <select class="dashboard-input" name="status">
+            <option value="">All statuses</option>
+            {% for value, label in status_choices %}
+                <option value="{{ value }}" {% if filters.status == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <select class="dashboard-input" name="type">
+            <option value="">All types</option>
+            {% for value, label in inquiry_type_choices %}
+                <option value="{{ value }}" {% if filters.type == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <select class="dashboard-input" name="solution">
+            <option value="">All solutions</option>
+            {% for solution in solutions %}
+                <option value="{{ solution.pk }}" {% if filters.solution == solution.pk|stringformat:"s" %}selected{% endif %}>{{ solution.title }}</option>
+            {% endfor %}
+        </select>
+        <button class="button" type="submit">Apply</button>
+        <a class="button secondary" href="{% url 'dashboard:inquiries' %}">Reset</a>
+    </form>
+</section>
+
+<section class="panel">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Organization</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                    <th>Requested Solution</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inquiry in inquiries %}
+                    <tr class="clickable-row {% if inquiry.status == 'new' %}row-new{% endif %}" data-href="{% url 'dashboard:inquiry_detail' inquiry.pk %}" style="cursor: pointer;">
+                        <td>
+                            <strong>{{ inquiry.name }}</strong>
+                            <small class="mobile-meta">{{ inquiry.email }}</small>
+                        </td>
+                        <td>{{ inquiry.organization }}</td>
+                        <td><a href="mailto:{{ inquiry.email }}" onclick="event.stopPropagation();">{{ inquiry.email }}</a></td>
+                        <td>{{ inquiry.get_inquiry_type_display }}</td>
+                        <td>{{ inquiry.requested_solution|default:inquiry.requested_solution_slug|default:"-" }}</td>
+                        <td><span class="status status-{{ inquiry.status }}">{{ inquiry.get_status_display }}</span></td>
+                        <td>{{ inquiry.created_at|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="7" class="empty-row">No inquiries match these filters.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% if inquiries.paginator.num_pages > 1 %}
+    <nav class="pagination-bar" aria-label="Inbox pagination">
+        <span>Page {{ inquiries.number }} of {{ inquiries.paginator.num_pages }}</span>
+        <div>
+            {% if inquiries.has_previous %}
+                <a class="button secondary" href="?q={{ filters.q|urlencode }}&status={{ filters.status|urlencode }}&type={{ filters.type|urlencode }}&solution={{ filters.solution|urlencode }}&page={{ inquiries.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% if inquiries.has_next %}
+                <a class="button secondary" href="?q={{ filters.q|urlencode }}&status={{ filters.status|urlencode }}&type={{ filters.type|urlencode }}&solution={{ filters.solution|urlencode }}&page={{ inquiries.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    </nav>
+{% endif %}
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // جعل صفوف الجدول قابلة للنقر
+    const clickableRows = document.querySelectorAll(".clickable-row");
+    
+    clickableRows.forEach(row => {
+        row.addEventListener("click", (e) => {
+            // التحقق إذا كان النقر على رابط البريد الإلكتروني
+            if (e.target.tagName === "A" || e.target.closest("a")) {
+                return; // السماح للرابط بالعمل بشكل طبيعي
+            }
+            
+            const href = row.getAttribute("data-href");
+            if (href) {
+                window.location.href = href;
+            }
+        });
+        
+        // إضافة تأثير hover
+        row.addEventListener("mouseenter", () => {
+            row.style.backgroundColor = "rgba(193, 39, 45, 0.1)";
+        });
+        
+        row.addEventListener("mouseleave", () => {
+            row.style.backgroundColor = "";
+        });
+    });
+});
+</script>
+{% endblock %}

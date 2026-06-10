@@ -1,0 +1,77 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Solutions{% endblock %}
+{% block heading %}Solutions Management{% endblock %}
+{% block kicker %}Public product content{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Solution</th>
+                    <th>Subtitle</th>
+                    <th>Active</th>
+                    <th>Visuals</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for solution in solutions %}
+                    <tr class="clickable-row">
+                        <td>
+                            <div class="solution-cell">
+                                <div class="thumb">
+                                    {% if solution.logo_image %}
+                                        {% if solution.logo_image.url|slice:"-4:"|lower == ".glb" %}
+                                            <div class="glb-preview-placeholder" style="font-size: 9px; gap: 2px;">
+                                                <span class="glb-icon" style="font-size: 10px; padding: 1px 4px;">3D</span>
+                                            </div>
+                                        {% else %}
+                                            <img src="{{ solution.logo_image.url }}" alt="">
+                                        {% endif %}
+                                    {% elif solution.logo_image_path %}
+                                        {% if solution.logo_image_path|slice:"-4:"|lower == ".glb" %}
+                                            <div class="glb-preview-placeholder" style="font-size: 9px; gap: 2px;">
+                                                <span class="glb-icon" style="font-size: 10px; padding: 1px 4px;">3D</span>
+                                            </div>
+                                        {% else %}
+                                            <img src="{% static solution.logo_image_path %}" alt="">
+                                        {% endif %}
+                                    {% else %}
+                                        <span>{{ solution.title|slice:":2" }}</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <strong>{{ solution.title }}</strong>
+                                </div>
+                            </div>
+                            <a class="row-link" href="{% url 'dashboard:solution_edit' solution.pk %}" aria-label="Edit {{ solution.title }}"></a>
+                        </td>
+                        <td>{{ solution.subtitle|default:"-" }}</td>
+                        <td><span class="status {% if solution.is_active %}status-contacted{% else %}status-archived{% endif %}">{{ solution.is_active|yesno:"Active,Inactive" }}</span></td>
+                        <td>{{ solution.visual_count }}</td>
+                        <td>{{ solution.updated_at|date:"Y-m-d" }}</td>
+                        <td class="actions-cell">
+                            <a class="table-action" href="{% url 'dashboard:solution_edit' solution.pk %}" title="Edit" aria-label="Edit">✎</a>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="solution_id" value="{{ solution.pk }}">
+                                <input type="hidden" name="action" value="{% if solution.is_active %}deactivate{% else %}activate{% endif %}">
+                                <button class="table-action muted" type="submit" title="{% if solution.is_active %}Deactivate{% else %}Activate{% endif %}" aria-label="{% if solution.is_active %}Deactivate{% else %}Activate{% endif %}" onclick="return confirm('Change public visibility for {{ solution.title }}?')">
+                                    {% if solution.is_active %}⊘{% else %}👁{% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="6" class="empty-row">No solutions found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

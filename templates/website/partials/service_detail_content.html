@@ -3,38 +3,63 @@
 <section class="service-detail" aria-labelledby="service-detail-title">
     <div class="service-detail-copy">
         <div class="service-detail-heading">
-            {% if solution.id == "vulture_uavs" %}
-                <h1 id="service-detail-title" class="service-vulture-title">
-                    <span>VULTURE</span>
-                    <small>U A V</small>
-                </h1>
-            {% elif solution.id == "tactical_data_link" %}
-                <h1 id="service-detail-title" class="service-tactical-title">
-                    <small>Tactical</small>
-                    <span>Data Link</span>
-                    <small>Solutions</small>
-                </h1>
+            {% if solution.logo %}
+                <img id="service-detail-title" class="service-detail-logo" src="{{ solution.logo }}" alt="{{ solution.title }} logo">
             {% else %}
-                <h1 id="service-detail-title">{{ solution.title }}</h1>
+                {% if solution.id == "vulture_uavs" %}
+                    <h1 id="service-detail-title" class="service-vulture-title">
+                        <span>VULTURE</span>
+                        <small>U A V</small>
+                    </h1>
+                {% elif solution.id == "tactical_data_link" %}
+                    <h1 id="service-detail-title" class="service-tactical-title">
+                        <small>Tactical</small>
+                        <span>Data Link</span>
+                        <small>Solutions</small>
+                    </h1>
+                {% else %}
+                    <h1 id="service-detail-title">{{ solution.title }}</h1>
+                {% endif %}
             {% endif %}
         </div>
 
-        <p class="service-detail-description">{{ solution.description|linebreaksbr }}</p>
+        <div class="service-detail-description">{{ solution.description|safe }}</div>
 
         <a href="{% url 'solutions' %}" class="service-secondary-btn">OUR SOLUTIONS</a>
     </div>
 
     <div class="service-detail-visual{% if solution.show_visual_nav %} service-detail-carousel{% endif %}">
-        {% if solution.visuals.0.image %}
+        {% if solution.show_visual_nav and solution.visuals.0.image %}
             <img
                 class="service-carousel-image"
                 data-service-image
-                data-static-prefix="{% get_static_prefix %}"
-                src="{% static solution.visuals.0.image %}"
+                src="{{ solution.visuals.0.image }}"
                 alt="{{ solution.visuals.0.title }}"
+                style="{% if solution.visuals.0.image|slice:"-4:"|lower == ".glb" %}display: none;{% endif %}"
             >
+            <model-viewer
+                class="service-carousel-image"
+                data-service-model
+                src="{{ solution.visuals.0.image }}"
+                alt="{{ solution.visuals.0.title }}"
+                auto-rotate
+                camera-controls
+                touch-action="pan-y"
+                style="{% if solution.visuals.0.image|slice:"-4:"|lower != ".glb" %}display: none;{% endif %}"
+            ></model-viewer>
         {% elif solution.image %}
-            <img src="{% static solution.image %}" alt="{{ solution.title }} system illustration">
+            {% if solution.image|slice:"-4:"|lower == ".glb" %}
+                <model-viewer
+                    style="width: 439px; height: 406px; position: absolute; top: 0; left: 85px; display: block;"
+                    src="{{ solution.image }}"
+                    alt="{{ solution.title }} 3D model"
+                    auto-rotate
+                    camera-controls
+                    touch-action="pan-y"
+                ></model-viewer>
+            {% else %}
+                <img src="{{ solution.image }}" alt="{{ solution.title }} system illustration">
+            {% endif %}
         {% elif solution.illustration_type == "vulture_svg" %}
             <svg class="service-vulture-drone" viewBox="0 0 520 430" aria-label="{{ solution.title }} system illustration">
                 <g class="service-wire">
@@ -115,16 +140,25 @@
             <button class="service-visual-arrow service-visual-arrow-next" type="button" aria-label="Next {{ solution.title }} visual">&rsaquo;</button>
         {% endif %}
 
-        {% if solution.visual_caption %}
-            <div class="service-visual-caption" data-service-caption>{{ solution.visual_caption }}</div>
+        {% if solution.show_visual_nav %}
+            <div class="service-visual-caption" data-service-caption>
+                {% if solution.visuals.0 %}
+                    {{ solution.visuals.0.caption }}
+                {% endif %}
+            </div>
         {% endif %}
 
-        <button class="service-specs-btn" type="button" data-specs-product="{{ solution.title }}">
+        <button
+            class="service-specs-btn"
+            type="button"
+            data-specs-product="{{ solution.title }}"
+            data-specs-slug="{{ solution.slug }}"
+        >
             {{ solution.cta_text }}
         </button>
     </div>
 </section>
 
-{% if solution.visuals %}
+{% if solution.show_visual_nav and solution.visuals %}
     {{ solution.visuals|json_script:"service-visual-data" }}
 {% endif %}

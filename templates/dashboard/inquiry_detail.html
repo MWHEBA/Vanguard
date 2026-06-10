@@ -1,0 +1,56 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Inquiry Detail{% endblock %}
+{% block heading %}Inquiry Detail{% endblock %}
+{% block kicker %}Lead review{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+    <section class="panel">
+        <div class="panel-heading">
+            <div>
+                <h2>{{ inquiry.name }}</h2>
+                <p class="panel-subtitle">{{ inquiry.organization }}</p>
+            </div>
+            <a class="button secondary" href="{% url 'dashboard:inquiries' %}">Back to inbox</a>
+        </div>
+        <div class="lead-actions">
+            <a class="button secondary" href="mailto:{{ inquiry.email }}">Email lead</a>
+            <a class="button secondary" href="tel:{{ inquiry.phone }}">Call lead</a>
+            <span class="status status-{{ inquiry.status }}">{{ inquiry.get_status_display }}</span>
+        </div>
+        <dl class="detail-list">
+            <dt>Organization</dt><dd>{{ inquiry.organization }}</dd>
+            <dt>Email</dt><dd><a href="mailto:{{ inquiry.email }}">{{ inquiry.email }}</a></dd>
+            <dt>Phone</dt><dd>{{ inquiry.phone }}</dd>
+            <dt>Type</dt><dd>{{ inquiry.get_inquiry_type_display }}</dd>
+            <dt>Requested Solution</dt><dd>{{ inquiry.requested_solution|default:inquiry.requested_solution_slug|default:"-" }}</dd>
+            <dt>Source Path</dt><dd>{{ inquiry.source_path|default:"-" }}</dd>
+            <dt>Created</dt><dd>{{ inquiry.created_at|date:"Y-m-d H:i" }}</dd>
+            <dt>Updated</dt><dd>{{ inquiry.updated_at|date:"Y-m-d H:i" }}</dd>
+        </dl>
+        <div class="message-block">
+            <h3>Message</h3>
+            <p>{{ inquiry.message|linebreaksbr }}</p>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Internal Handling</h2>
+        <form class="stacked-form" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <label>
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {{ field.errors }}
+                </label>
+            {% endfor %}
+            <div class="sticky-actions">
+                <button class="button" type="submit">Save inquiry</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

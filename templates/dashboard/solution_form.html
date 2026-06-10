@@ -1,0 +1,218 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Edit Solution{% endblock %}
+{% block heading %}Edit {{ solution.title }}{% endblock %}
+{% block kicker %}{% endblock %}
+
+{% block content %}
+<section class="panel form-panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Content Fields</h2>
+            <p class="panel-subtitle">Edit the public content for this solution.</p>
+        </div>
+        <a class="button secondary" href="{% url 'dashboard:solutions' %}">Back to solutions</a>
+    </div>
+    <form class="stacked-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="intent" value="solution">
+        {{ form.non_field_errors }}
+        <div class="solution-image-row">
+            <div class="solution-image-fields">
+                <label>
+                    <span>Title</span>
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </label>
+                <label>
+                    <span>Subtitle</span>
+                    {{ form.subtitle }}
+                    {{ form.subtitle.errors }}
+                </label>
+                <label>
+                    <span>Description</span>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </label>
+                <label class="check-row">
+                    <span>Display gallery navigation</span>
+                    {{ form.show_visual_nav }}
+                    {{ form.show_visual_nav.errors }}
+                </label>
+            </div>
+            <div class="solution-image-column">
+                <div class="gallery-dropzone primary-image-dropzone" data-logo-image-dropzone>
+                    <input id="logo-image-input" name="logo_image" type="file" accept=".webp,.png,.glb,image/webp,image/png" hidden data-logo-image-input>
+                    <label for="logo-image-input">
+                        <div class="primary-image-preview" data-logo-image-preview>
+                            {% if solution.logo_image %}
+                                {% if solution.logo_image.url|slice:"-4:"|lower == ".glb" %}
+                                    <div class="glb-preview-placeholder"><span class="glb-icon">3D</span><span class="glb-label">.GLB Model</span></div>
+                                {% else %}
+                                    <img src="{{ solution.logo_image.url }}" alt="">
+                                {% endif %}
+                            {% elif solution.logo_image_path %}
+                                {% if solution.logo_image_path|slice:"-4:"|lower == ".glb" %}
+                                    <div class="glb-preview-placeholder"><span class="glb-icon">3D</span><span class="glb-label">.GLB Model</span></div>
+                                {% else %}
+                                    <img src="{% static solution.logo_image_path %}" alt="">
+                                {% endif %}
+                            {% else %}
+                                <span>Drop logo here</span>
+                            {% endif %}
+                        </div>
+                        <strong>Drop logo here</strong>
+                        <span>or select a file to update the logo</span>
+                    </label>
+                    {{ form.logo_image.errors }}
+                </div>
+
+                <div class="gallery-dropzone primary-image-dropzone" data-primary-image-dropzone>
+                    <input id="primary-image-input" name="primary_image" type="file" accept=".webp,.png,.glb,image/webp,image/png" hidden data-primary-image-input>
+                    <label for="primary-image-input">
+                        <div class="primary-image-preview" data-primary-image-preview>
+                            {% if solution.primary_image %}
+                                {% if solution.primary_image.url|slice:"-4:"|lower == ".glb" %}
+                                    <div class="glb-preview-placeholder"><span class="glb-icon">3D</span><span class="glb-label">.GLB Model</span></div>
+                                {% else %}
+                                    <img src="{{ solution.primary_image.url }}" alt="">
+                                {% endif %}
+                            {% elif solution.primary_image_path %}
+                                {% if solution.primary_image_path|slice:"-4:"|lower == ".glb" %}
+                                    <div class="glb-preview-placeholder"><span class="glb-icon">3D</span><span class="glb-label">.GLB Model</span></div>
+                                {% else %}
+                                    <img src="{% static solution.primary_image_path %}" alt="">
+                                {% endif %}
+                            {% else %}
+                                <span>Drop an image here</span>
+                            {% endif %}
+                        </div>
+                        <strong>Drop primary image here</strong>
+                        <span>or select a file to update the primary image</span>
+                    </label>
+                    {{ form.primary_image.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="sticky-actions">
+            <button class="button" type="submit">Save solution</button>
+        </div>
+    </form>
+</section>
+
+<section class="panel form-panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Gallery</h2>
+            <p class="panel-subtitle">Manage image uploads, titles, ordering, and public visibility for this solution.</p>
+        </div>
+    </div>
+    <div
+        class="gallery-dropzone"
+        data-gallery-dropzone
+        data-upload-url="{% url 'dashboard:solution_gallery_upload' solution.pk %}"
+        data-reorder-url="{% url 'dashboard:solution_gallery_reorder' solution.pk %}"
+        data-replace-url-template="{% url 'dashboard:solution_gallery_replace' solution.pk 0 %}"
+        data-title-url-template="{% url 'dashboard:solution_gallery_title' solution.pk 0 %}"
+        data-delete-url-template="{% url 'dashboard:solution_gallery_delete' solution.pk 0 %}"
+    >
+        <input id="gallery-upload-input" type="file" accept=".webp,.png,.glb,image/webp,image/png" multiple data-gallery-input>
+        <label for="gallery-upload-input">
+            <strong>Drop images here</strong>
+            <span>or select files to upload directly into this solution gallery</span>
+        </label>
+    </div>
+    <div class="gallery-ajax-status" data-gallery-status aria-live="polite"></div>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="intent" value="gallery_update">
+        {{ formset.management_form }}
+        <div class="gallery-grid" data-gallery-list>
+            {% for gallery_form in formset %}
+                <article class="gallery-card" data-gallery-card data-visual-id="{{ gallery_form.instance.pk }}" draggable="true">
+                    {{ gallery_form.id }}
+                    <button class="drag-handle" type="button" data-drag-handle aria-label="Drag to reorder">::</button>
+                    <div class="gallery-preview">
+                        {% if gallery_form.instance.image_path %}
+                            {% if gallery_form.instance.image_path|slice:"-4:"|lower == ".glb" %}
+                                <div class="glb-preview-placeholder"><span class="glb-icon">3D</span><span class="glb-label">.GLB Model</span></div>
+                            {% else %}
+                                <img src="{% static gallery_form.instance.image_path %}" alt="">
+                            {% endif %}
+                        {% elif gallery_form.instance.uploaded_image %}
+                            {% if gallery_form.instance.uploaded_image.url|slice:"-4:"|lower == ".glb" %}
+                                <div class="glb-preview-placeholder"><span class="glb-icon">3D</span><span class="glb-label">.GLB Model</span></div>
+                            {% else %}
+                                <img src="{{ gallery_form.instance.uploaded_image.url }}" alt="">
+                            {% endif %}
+                        {% else %}
+                            <span>No image</span>
+                        {% endif %}
+                    </div>
+                    <div class="gallery-change">
+                        <input id="gallery-replace-{{ gallery_form.instance.pk }}" type="file" accept=".webp,.png,.glb,image/webp,image/png" data-gallery-replace-input>
+                        <label class="icon-action" for="gallery-replace-{{ gallery_form.instance.pk }}" aria-label="Change image">
+                            <span aria-hidden="true">↻</span>
+                        </label>
+                    </div>
+                    <div class="gallery-card-body">
+                        <div class="gallery-fields">
+                            {% for field in gallery_form.visible_fields %}
+                                <label class="{% if field.field.widget.input_type == 'checkbox' %}check-row{% endif %}">
+                                    <span>{{ field.label }}</span>
+                                    {{ field }}
+                                    {{ field.errors }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button class="gallery-delete-button" type="button" data-gallery-delete aria-label="Delete {{ gallery_form.instance.title }}">x</button>
+                </article>
+            {% empty %}
+                <p class="empty-row">No gallery items configured for this solution.</p>
+            {% endfor %}
+        </div>
+    </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'dashboard/js/gallery.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const showVisualNavCheckbox = document.querySelector('input[name="show_visual_nav"]');
+            // Find the section that contains the h2 with "Gallery" text
+            const gallerySection = Array.from(document.querySelectorAll('section.panel')).find(section => 
+                section.querySelector('h2')?.textContent.includes('Gallery')
+            );
+            
+            const primaryImageDropzone = document.querySelector('[data-primary-image-dropzone]');
+            
+            if (!showVisualNavCheckbox || !gallerySection) {
+                return;
+            }
+
+            const updateGalleryVisibility = () => {
+                // هنتحقق من حالة زر الجاليري ونخفي/نظهر الجاليري والصورة الرئيسية بناءً عليه
+                if (showVisualNavCheckbox.checked) {
+                    gallerySection.style.display = '';
+                    if (primaryImageDropzone) {
+                        primaryImageDropzone.style.display = 'none';
+                    }
+                } else {
+                    gallerySection.style.display = 'none';
+                    if (primaryImageDropzone) {
+                        primaryImageDropzone.style.display = '';
+                    }
+                }
+            };
+
+            // Initial state
+            updateGalleryVisibility();
+
+            // Listen for checkbox changes
+            showVisualNavCheckbox.addEventListener('change', updateGalleryVisibility);
+        });
+    </script>
+{% endblock %}

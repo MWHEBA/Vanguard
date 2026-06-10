@@ -1,0 +1,93 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Branding{% endblock %}
+{% block heading %}Site Branding{% endblock %}
+{% block kicker %}Manage website logo and favicon{% endblock %}
+
+{% block content %}
+<section class="panel form-panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Logo & Favicon</h2>
+            <p class="panel-subtitle">Upload your website logo and favicon. Supports webp, png, ico, and svg formats.</p>
+        </div>
+        <a class="button secondary" href="{% url 'home' %}">View public site</a>
+    </div>
+    <form class="stacked-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="branding-grid">
+            <div>
+                <div class="gallery-dropzone primary-image-dropzone" data-logo-branding-dropzone>
+                    <input id="logo-branding-input" name="logo" type="file" accept=".webp,.png,.ico,.svg,image/webp,image/png,image/svg+xml" hidden data-logo-branding-input>
+                    <label for="logo-branding-input">
+                        <div class="primary-image-preview" data-logo-branding-preview>
+                            {% if logo_url %}
+                                {% if logo_url|slice:"-4:"|lower == ".svg" %}
+                                    <div class="svg-preview-placeholder"><span class="svg-icon">SVG</span></div>
+                                {% else %}
+                                    <img src="{{ logo_url }}" alt="Site logo">
+                                {% endif %}
+                            {% else %}
+                                <span>Drop logo here</span>
+                            {% endif %}
+                        </div>
+                        <strong>Drop logo here</strong>
+                        <span>or select a file to update the logo</span>
+                    </label>
+                    {{ form.logo.errors }}
+                </div>
+            </div>
+
+            <div>
+                <div class="gallery-dropzone primary-image-dropzone" data-favicon-branding-dropzone>
+                    <input id="favicon-branding-input" name="favicon" type="file" accept=".ico,.png,.svg,image/png,image/svg+xml,image/x-icon" hidden data-favicon-branding-input>
+                    <label for="favicon-branding-input">
+                        <div class="primary-image-preview" data-favicon-branding-preview>
+                            {% if favicon_url %}
+                                {% if favicon_url|slice:"-4:"|lower == ".svg" %}
+                                    <div class="svg-preview-placeholder"><span class="svg-icon">SVG</span></div>
+                                {% else %}
+                                    <img src="{{ favicon_url }}" alt="Site favicon" style="width: 32px; height: 32px;">
+                                {% endif %}
+                            {% else %}
+                                <span>Drop favicon here</span>
+                            {% endif %}
+                        </div>
+                        <strong>Drop favicon here</strong>
+                        <span>or select a file to update the favicon</span>
+                    </label>
+                    {{ form.favicon.errors }}
+                </div>
+            </div>
+        </div>
+        <div class="sticky-actions">
+            <button class="button" type="submit">Save branding</button>
+        </div>
+    </form>
+</section>
+
+<style>
+.branding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .branding-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.branding-grid .gallery-dropzone {
+    margin-bottom: 0;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'dashboard/js/branding-dropzone.js' %}"></script>
+{% endblock %}

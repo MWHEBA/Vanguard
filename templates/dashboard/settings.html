@@ -1,0 +1,63 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Settings{% endblock %}
+{% block heading %}Site Settings{% endblock %}
+{% block kicker %}Safe operational configuration{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+    <section class="panel form-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>General Settings</h2>
+                <p class="panel-subtitle">Editable identity and contact fields. Infrastructure settings stay out of this dashboard.</p>
+            </div>
+            <a class="button secondary" href="{% url 'home' %}">View public site</a>
+        </div>
+        <form class="stacked-form" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <label>
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {{ field.errors }}
+                </label>
+            {% endfor %}
+            <div class="sticky-actions">
+                <button class="button" type="submit">Save settings</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Settings Preview</h2>
+        <div class="settings-preview">
+            <div>
+                <span>Site</span>
+                <strong>{{ settings_object.site_name }}</strong>
+            </div>
+            <div>
+                <span>Company</span>
+                <strong>{{ settings_object.company_name }}</strong>
+            </div>
+            <div>
+                <span>Email</span>
+                <strong>{{ settings_object.contact_email }}</strong>
+            </div>
+            <div>
+                <span>Phone</span>
+                <strong>{{ settings_object.contact_phone|default:"Not set" }}</strong>
+            </div>
+            <div>
+                <span>LinkedIn</span>
+                <strong>{{ settings_object.linkedin_url|default:"Not set" }}</strong>
+            </div>
+            <div>
+                <span>Footer</span>
+                <strong>{{ settings_object.footer_text }}</strong>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

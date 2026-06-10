@@ -1,0 +1,116 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Users{% endblock %}
+{% block heading %}Users Directory{% endblock %}
+{% block kicker %}Staff account visibility and safe status controls{% endblock %}
+
+{% block content %}
+<section class="metric-grid" aria-label="User metrics">
+    <a class="metric-card" href="{% url 'dashboard:users' %}">
+        <span>Total users</span>
+        <strong>{{ metrics.total }}</strong>
+        <em>Directory size</em>
+    </a>
+    <a class="metric-card" href="{% url 'dashboard:users' %}?status=active">
+        <span>Active</span>
+        <strong>{{ metrics.active }}</strong>
+        <em>Can sign in</em>
+    </a>
+    <a class="metric-card" href="{% url 'dashboard:users' %}?status=staff">
+        <span>Staff</span>
+        <strong>{{ metrics.staff }}</strong>
+        <em>Dashboard eligible</em>
+    </a>
+    <a class="metric-card" href="{% url 'dashboard:users' %}?status=inactive">
+        <span>Inactive</span>
+        <strong>{{ metrics.inactive }}</strong>
+        <em>Access disabled</em>
+    </a>
+</section>
+
+<nav class="quick-tabs" aria-label="User quick filters">
+    <a class="{% if not filters.status %}is-active{% endif %}" href="{% url 'dashboard:users' %}">All</a>
+    <a class="{% if filters.status == 'active' %}is-active{% endif %}" href="{% url 'dashboard:users' %}?status=active">Active</a>
+    <a class="{% if filters.status == 'inactive' %}is-active{% endif %}" href="{% url 'dashboard:users' %}?status=inactive">Inactive</a>
+    <a class="{% if filters.status == 'staff' %}is-active{% endif %}" href="{% url 'dashboard:users' %}?status=staff">Staff</a>
+</nav>
+
+<section class="panel">
+    <form class="filter-bar user-filter-bar" method="get">
+        <input class="dashboard-input" type="search" name="q" value="{{ filters.q }}" placeholder="Search username, name, or email">
+        <input type="hidden" name="status" value="{{ filters.status }}">
+        <button class="button" type="submit">Search</button>
+        <a class="button secondary" href="{% url 'dashboard:users' %}">Reset</a>
+    </form>
+</section>
+
+<section class="panel">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Staff</th>
+                    <th>Superuser</th>
+                    <th>Status</th>
+                    <th>Last Login</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            <div class="user-cell">
+                                <span class="account-avatar" aria-hidden="true">{{ user.username|first|upper }}</span>
+                                <div>
+                                    <strong>{{ user.username }}</strong>
+                                    <small>{{ user.get_full_name|default:"No full name" }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ user.email|default:"-" }}</td>
+                        <td><span class="status {% if user.is_staff %}status-contacted{% else %}status-archived{% endif %}">{{ user.is_staff|yesno:"Staff,Regular" }}</span></td>
+                        <td><span class="status {% if user.is_superuser %}status-reviewed{% else %}status-archived{% endif %}">{{ user.is_superuser|yesno:"Yes,No" }}</span></td>
+                        <td><span class="status {% if user.is_active %}status-contacted{% else %}status-new{% endif %}">{{ user.is_active|yesno:"Active,Inactive" }}</span></td>
+                        <td>{{ user.last_login|date:"Y-m-d H:i"|default:"Never" }}</td>
+                        <td>{{ user.date_joined|date:"Y-m-d" }}</td>
+                        <td class="actions-cell">
+                            {% if user.pk == request.user.pk %}
+                                <span class="table-note">Current user</span>
+                            {% elif user.is_superuser %}
+                                <span class="table-note">Admin only</span>
+                            {% else %}
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.pk }}">
+                                    <input type="hidden" name="action" value="{% if user.is_active %}deactivate{% else %}activate{% endif %}">
+                                    <button class="table-action muted" type="submit" onclick="return confirm('Change account status for {{ user.username }}?')">{{ user.is_active|yesno:"Deactivate,Activate" }}</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="8" class="empty-row">No users match these filters.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% if users.paginator.num_pages > 1 %}
+    <nav class="pagination-bar" aria-label="Users pagination">
+        <span>Page {{ users.number }} of {{ users.paginator.num_pages }}</span>
+        <div>
+            {% if users.has_previous %}
+                <a class="button secondary" href="?q={{ filters.q|urlencode }}&status={{ filters.status|urlencode }}&page={{ users.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% if users.has_next %}
+                <a class="button secondary" href="?q={{ filters.q|urlencode }}&status={{ filters.status|urlencode }}&page={{ users.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    </nav>
+{% endif %}
+{% endblock %}
