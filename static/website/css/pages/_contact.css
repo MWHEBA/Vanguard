@@ -332,3 +332,14 @@
     text-align: center;
     text-transform: uppercase;
 }
+
+/* Container for inline links below the form */
+.contact-links-row {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 115px;
+}
+

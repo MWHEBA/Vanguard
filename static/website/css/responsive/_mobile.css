@@ -544,7 +544,15 @@
     .contact-card-link {
         font-size: 14px;
     }
+
+    .contact-links-row {
+        margin-left: 0;
+        justify-content: flex-start;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+    }
 }
+
 
 /* ==========================================
    MOBILE SMALL (< 480px)

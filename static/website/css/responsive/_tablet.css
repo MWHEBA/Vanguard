@@ -506,7 +506,12 @@
     .contact-card-link {
         font-size: 14px;
     }
+    
+    .contact-links-row {
+        margin-left: 102px;
+    }
 }
+
 
 
 /* ==========================================
