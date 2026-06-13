@@ -1,7 +1,28 @@
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.views import LoginView
 from django.contrib.staticfiles.storage import staticfiles_storage
+
+def staff_member_required(view_func):
+    """
+    Custom decorator that checks if the user is active and staff,
+    redirecting to the custom dashboard login page if not.
+    """
+    actual_decorator = user_passes_test(
+        lambda u: u.is_active and u.is_staff,
+        login_url="dashboard:login"
+    )
+    return actual_decorator(view_func)
+
+
+class DashboardLoginView(LoginView):
+    """
+    Custom login view for Vanguard staff operators, utilizing the brand-aligned login template.
+    """
+    template_name = "dashboard/login.html"
+    redirect_authenticated_user = True
+
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.db.models import Count, Q
@@ -103,6 +124,8 @@ def inquiries(request):
         )
     if status:
         queryset = queryset.filter(status=status)
+    else:
+        queryset = queryset.exclude(status=ContactInquiry.STATUS_ARCHIVED)
     if inquiry_type:
         queryset = queryset.filter(inquiry_type=inquiry_type)
     if solution_id:

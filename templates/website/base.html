@@ -3,7 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Optimized Viewport Meta Tag for Mobile/Tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#171717">
     <title>{% if site_settings %}{{ site_settings.site_name }}{% else %}Vanguard Technologies{% endif %} | {% block title %}Defense Systems{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,6 +53,13 @@
 
         <!-- تذييل الصفحة المشترك -->
         <footer>
+            <!-- Mobile Navigation Button - Only visible on mobile -->
+            {% if current_page == 'solutions' %}
+                <a href="{% url 'contact' %}" class="mobile-nav-btn">CONTACT US</a>
+            {% elif current_page == 'contact' %}
+                <a href="{% url 'solutions' %}" class="mobile-nav-btn">OUR SOLUTIONS</a>
+            {% endif %}
+            
             <div class="footer-copyright">
                 {% if site_settings %}{{ site_settings.footer_text }}{% else %}ALL RIGHTS RESERVED 2026 &copy; VANGUARD TECHNOLOGIES{% endif %}
             </div>

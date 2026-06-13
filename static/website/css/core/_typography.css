@@ -1,0 +1,93 @@
+/*!
+ * Typography System - Vanguard Technologies
+ * Fluid, responsive, and accessible text styles
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   HEADINGS BASE STYLES
+   ========================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-white);
+    margin: 0;
+}
+
+/* ==========================================
+   PAGE TITLE (Main Heading)
+   ========================================== */
+h1.page-title {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 700;
+    line-height: 1.43;
+    letter-spacing: -0.01em;
+    color: var(--text-white);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+}
+
+/* ==========================================
+   PAGE DESCRIPTION
+   ========================================== */
+.page-description {
+    font-size: clamp(16px, 2vw, 28px);
+    line-height: 1.35;
+    color: var(--text-desc);
+    margin-bottom: 0;
+    max-width: 780px;
+}
+
+/* ==========================================
+   TEXT LABEL (Small Caps Style)
+   ========================================== */
+.text-label {
+    font-family: monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--accent-red);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+/* ==========================================
+   UTILITY TEXT CLASSES
+   ========================================== */
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+
+.text-muted { color: var(--text-muted); }
+.text-soft { color: var(--text-soft); }
+.text-white { color: var(--text-white); }
+.text-center { text-align: center; }
+.text-uppercase { text-transform: uppercase; }
+
+/* ==========================================
+   LOGO TEXT STYLING
+   ========================================== */
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    color: var(--text-white);
+    text-transform: uppercase;
+}
+
+.logo-dot {
+    color: var(--accent-red);
+}
+
+/* ==========================================
+   FOOTER TEXT
+   ========================================== */
+.footer-copyright {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}

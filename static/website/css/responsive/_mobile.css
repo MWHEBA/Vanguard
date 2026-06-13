@@ -1,0 +1,660 @@
+/*!
+ * Mobile Responsive Styles - Vanguard Technologies
+ * Optimized for mobile devices (< 600px)
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   MOBILE ALL SIZES (< 600px)
+   ========================================== */
+@media (max-width: 599px) {
+    html, body {
+        overflow-x: hidden;
+    }
+    
+    .viewport-page {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+    
+    /* Header */
+    header {
+        padding: 28px 28px 0 28px;
+        height: auto;
+        min-height: auto;
+        flex-direction: row;
+        gap: 0;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .logo-container {
+        width: auto;
+        display: flex;
+        justify-content: flex-start;
+    }
+    
+    .logo-container img {
+        width: 190px;
+        height: auto;
+    }
+    
+    /* Hide desktop navigation */
+    .nav-cta-container {
+        display: none;
+    }
+    
+    /* Main Content */
+    .main-content {
+        height: auto;
+        min-height: auto;
+        flex-direction: column;
+        overflow-y: visible;
+    }
+    
+    .content-left {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 56px 28px 36px 28px;
+        border-right: none;
+        justify-content: center;
+    }
+    
+    .content-right {
+        width: 100%;
+        height: 450px;
+        min-height: 450px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Typography */
+    h1.page-title {
+        font-size: clamp(26px, 6.5vw, 34px);
+        margin-bottom: 18px;
+        line-height: 1.22;
+        font-weight: 400;
+    }
+    
+    .page-description {
+        font-size: clamp(15px, 3.8vw, 18px);
+        line-height: 1.6;
+    }
+    
+    /* Buttons */
+    .primary-btn {
+        margin-top: 60px;
+        width: 100%;
+        max-width: 380px;
+        min-height: 52px;
+        font-size: 15px;
+    }
+    
+    /* Show mobile-specific buttons */
+    .mobile-contact-btn,
+    .solutions-contact-btn,
+    .mobile-nav-btn {
+        display: inline-flex;
+        width: 100%;
+        max-width: 376px;
+        min-height: 54px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid var(--btn-border);
+        border-bottom: 1px solid var(--btn-border);
+        background-color: var(--transparent);
+        transition: all var(--transition-fast);
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        touch-action: manipulation;
+    }
+    
+    .mobile-nav-btn:hover,
+    .mobile-nav-btn:active {
+        color: var(--text-white);
+        border-top-color: var(--system-hover-stroke);
+        border-bottom-color: var(--system-hover-stroke);
+        background-color: var(--btn-hover-bg-soft);
+    }
+    
+    /* Footer */
+    footer {
+        padding: 18px 28px 28px 28px;
+        height: auto;
+        min-height: 70px;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 7px;
+        font-size: 0.68rem;
+    }
+    
+    .footer-links {
+        display: none;
+    }
+}
+
+/* ==========================================
+   HOME PAGE - MOBILE
+   ========================================== */
+@media (max-width: 599px) {
+    .home-page-bg {
+        background-image: none;
+    }
+    
+    .home-page-bg .content-left {
+        width: 100%;
+        max-width: 100%;
+        padding: 56px 28px 36px 28px;
+        height: auto;
+        min-height: auto;
+        justify-content: center;
+    }
+    
+    .home-page-bg h1.page-title {
+        font-size: clamp(34px, 7.5vw, 40px);
+        line-height: 1.2;
+        font-weight: 400;
+    }
+    
+    .home-page-bg .page-description {
+        font-size: clamp(18px, 4.2vw, 22px);
+        line-height: 1.5;
+        color: rgba(123, 123, 123, 1);
+        max-width: 100%;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .home-page-bg .content-right {
+        background-image: url('../../images/Home.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        transform: rotate(-16deg);
+        transform-origin: center center;
+        width: 175%;
+        height: 450px;
+        position: relative;
+        left: -37.5%;
+        bottom: -90px;
+    }
+}
+
+/* ==========================================
+   SOLUTIONS PAGE - MOBILE
+   ========================================== */
+@media (max-width: 599px) {
+    .solutions-reference {
+        margin-top: 10vw;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 28px 12px;
+    }
+    
+    .solutions-title {
+        width: auto;
+        font-size: 26px;
+        align-self: center;
+        text-align: center;
+        line-height: 1.4;
+        order: -1;
+    }
+    
+    .solutions-map {
+        width: 120%;
+        max-width: 140%;
+        height: auto;
+        aspect-ratio: auto;
+        min-height: 500px;
+        align-self: center;
+        order: 0;
+        flex: 1 1 auto;
+        transform: scale(1.3) translateX(-10%);
+    }
+    
+    .solutions-wireframe-svg {
+        height: 100%;
+    }
+    
+    .solutions-wire-lines {
+        stroke-width: 4;
+    }
+    
+    .solution-svg-labels {
+        font-size: 24px;
+        font-weight: 700;
+    }
+}
+
+/* ==========================================
+   SERVICE DETAIL PAGES - MOBILE
+   ========================================== */
+@media (max-width: 599px) {
+    .service-detail-page .main-content {
+        height: auto;
+    }
+    
+    .service-detail {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 40px 52px;
+        align-items: flex-start;
+    }
+    
+    .service-detail-copy {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .service-detail-heading {
+        width: auto;
+        height: auto;
+        margin-bottom: 12px;
+    }
+    
+    .service-detail-heading h1 {
+        font-size: 32px;
+    }
+    
+    .service-detail-logo {
+        max-width: 180px;
+        max-height: 63px;
+    }
+    
+    .service-vulture-title {
+        font-size: 36px !important;
+    }
+    
+    .service-vulture-title small {
+        font-size: 18px !important;
+        margin-top: 8px;
+    }
+    
+    .service-detail-description {
+        width: 100%;
+        font-size: 4.5vw;
+        line-height: 1.55;
+        margin-top: 26px;
+    }
+    
+    .service-secondary-btn {
+        margin-top: 68px;
+        width: 100%;
+        max-width: 376px;
+        min-height: 54px;
+        font-size: 16px;
+    }
+    
+    .service-detail-visual {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 610 / 490;
+        align-self: center;
+    }
+    
+    .service-detail-visual img {
+        width: 72%;
+        height: auto;
+        left: 14%;
+    }
+    
+    .service-specs-btn {
+        width: 146px;
+        height: 41px;
+        font-size: 12px;
+        top: 89%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    /* Service Carousel - Mobile */
+    .service-detail-carousel {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 610 / 584;
+    }
+    
+    .service-vulture-drone {
+        width: 75%;
+        height: auto;
+        left: 12.5%;
+    }
+    
+    .service-skyguard-radar {
+        width: 54%;
+        height: 72%;
+        top: 3%;
+        left: 23%;
+    }
+    
+    .service-detail-carousel .service-carousel-image {
+        width: 84%;
+        height: 66%;
+        top: 5%;
+        left: 8%;
+    }
+    
+    .service-detail-skyguard .service-detail-carousel .service-carousel-image {
+        width: 60%;
+        height: 70%;
+        top: 3%;
+        left: 20%;
+    }
+    
+    .service-visual-caption {
+        font-size: 18px;
+        top: 78%;
+    }
+    
+    .service-visual-arrow {
+        width: 40px;
+        height: 40px;
+        top: 84%;
+    }
+    
+    .service-detail-carousel .service-specs-btn {
+        top: 91%;
+    }
+    
+    .service-tactical-title span {
+        font-size: 34px;
+    }
+    
+    .service-tactical-title small {
+        font-size: 22px;
+    }
+    
+    /* Product-specific overrides */
+    .service-detail-vulture_uavs .service-detail,
+    .service-detail-skyguard .service-detail,
+    .service-detail-tactical_data_link .service-detail {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+    }
+    
+    .service-detail-vulture_uavs .service-detail-description,
+    .service-detail-skyguard .service-detail-description,
+    .service-detail-tactical_data_link .service-detail-description {
+        width: 100%;
+    }
+}
+
+/* ==========================================
+   SPECS MODAL - MOBILE
+   ========================================== */
+@media (max-width: 599px) {
+    .specs-modal {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+    
+    .specs-modal-panel {
+        width: 100%;
+        min-height: 0;
+        max-height: 90vh;
+        padding: 28px 18px 24px;
+        overflow-y: auto;
+    }
+    
+    .specs-modal-close {
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        font-size: 40px;
+        line-height: 28px;
+    }
+    
+    .specs-modal-product {
+        font-size: 18px;
+        padding-right: 40px;
+    }
+    
+    .specs-modal-form {
+        width: 100%;
+        margin-top: 28px;
+        gap: 20px;
+    }
+    
+    .specs-modal-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .specs-modal-label {
+        font-size: 20px;
+        text-align: left;
+    }
+    
+    .specs-modal-input,
+    .specs-modal-country-selector {
+        height: 44px;
+        font-size: 16px;
+    }
+    
+    .specs-modal-phone {
+        grid-template-columns: 112px minmax(0, 1fr);
+    }
+    
+    .specs-modal-submit {
+        width: 100%;
+        height: 46px;
+        margin-top: 8px;
+        font-size: 14px;
+    }
+}
+
+/* ==========================================
+   CONTACT PAGE - MOBILE
+   ========================================== */
+@media (max-width: 599px) {
+    .contact-page-bg .main-content {
+        flex-direction: column;
+        height: auto;
+        min-height: auto;
+        overflow-y: auto;
+    }
+    
+    .contact-page-bg .content-left {
+        width: 100%;
+        min-height: auto;
+        padding: 40px 32px;
+        justify-content: flex-start;
+        order: 1;
+    }
+    
+    .contact-page-bg .content-right {
+        width: 100%;
+        height: auto;
+        min-height: 380px;
+        padding: 32px;
+        order: 2;
+    }
+    
+    .contact-form-container {
+        gap: 18px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .form-row {
+        flex-direction: column !important;
+        gap: 8px !important;
+        align-items: flex-start !important;
+    }
+    
+    .form-label {
+        width: 100% !important;
+        text-align: left !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.08em !important;
+    }
+    
+    .form-input,
+    .form-input-phone {
+        height: 46px;
+        font-size: 16px;
+        padding: 0 14px;
+    }
+    
+    .form-textarea {
+        min-height: 140px;
+        font-size: 16px;
+        padding: 14px;
+    }
+    
+    .country-selector {
+        width: 105px;
+        height: 46px;
+    }
+    
+    .illustration-container {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    
+    .contact-card-overlay {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-top: 20px;
+        padding: 22px 26px;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .contact-card-cta {
+        font-size: 10px;
+    }
+    
+    .contact-card-link {
+        font-size: 14px;
+    }
+}
+
+/* ==========================================
+   MOBILE SMALL (< 480px)
+   ========================================== */
+@media (max-width: 479px) {
+    header {
+        padding: 32px 32px 0 32px;
+    }
+    
+    .logo-container img {
+        width: 180px;
+    }
+    
+    .content-left {
+        padding: 60px 32px 40px 32px;
+    }
+    
+    .content-right {
+        height: 470px;
+        min-height: 470px;
+    }
+    
+    h1.page-title {
+        font-size: 28px;
+        margin-bottom: 16px;
+        line-height: 1.19;
+    }
+    
+    .home-page-bg h1.page-title {
+        font-size: 36px;
+        line-height: 1.19;
+        margin-bottom: 20px;
+    }
+    
+    .page-description {
+        font-size: 15px;
+        line-height: 1.65;
+    }
+    
+    .home-page-bg .page-description {
+        font-size: 20px;
+        line-height: 1.5;
+    }
+    
+    .home-page-bg .content-right {
+        width: 183%;
+        height: 610px;
+        left: 44px;
+        bottom: 367px;
+        transform: rotate(0deg);
+    }
+    
+    footer {
+        padding: 20px 32px 32px 32px;
+        gap: 8px;
+        font-size: 0.65rem;
+    }
+    
+    .footer-copyright {
+        font-size: 0.65rem;
+    }
+
+    /* Contact Page - Mobile Small */
+    .contact-page-bg .content-left {
+        padding: 40px 32px;
+    }
+    
+    .contact-page-bg .content-right {
+        padding: 32px;
+        min-height: 400px;
+    }
+    
+    .contact-form-container {
+        gap: 16px;
+    }
+    
+    .form-label {
+        font-size: 0.65rem !important;
+    }
+    
+    .form-input,
+    .form-input-phone,
+    .form-textarea {
+        font-size: 15px;
+    }
+    
+    .country-selector {
+        width: 100px;
+    }
+    
+    .contact-card-overlay {
+        padding: 20px 24px;
+        margin-top: 28px;
+    }
+    
+    .contact-card-cta {
+        font-size: 8px;
+    }
+}
+
+
+/* ==========================================
+   FIX: iOS Safari Input Zoom Prevention
+   ========================================== */
+@media (max-width: 767px) {
+    @supports (-webkit-touch-callout: none) {
+        input,
+        textarea,
+        select {
+            font-size: 16px !important;
+        }
+    }
+}

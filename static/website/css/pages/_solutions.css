@@ -1,0 +1,67 @@
+/*!
+ * Solutions Page Styles - Vanguard Technologies
+ * Interactive wireframe map and solution navigation
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   SOLUTIONS REFERENCE CONTAINER
+   ========================================== */
+.solutions-reference {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 28px);
+    padding-inline: clamp(24px, 5vw, 88px);
+}
+
+/* ==========================================
+   SOLUTIONS TITLE
+   ========================================== */
+.solutions-title {
+    width: 171px;
+    flex: 0 0 171px;
+    position: relative;
+    top: auto;
+    left: auto;
+    color: rgba(123, 123, 123, 1);
+    font-family: 'Cairo', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.solutions-title span {
+    display: block;
+}
+
+/* ==========================================
+   SOLUTIONS MAP (SVG Container)
+   ========================================== */
+.solutions-map {
+    width: clamp(520px, 58vw, 820px);
+    aspect-ratio: 1000 / 820;
+    position: relative;
+    top: auto;
+    left: auto;
+    flex: 0 1 820px;
+}
+
+/* ==========================================
+   SOLUTIONS CONTAINER (for 3D viewer)
+   ========================================== */
+.solutions-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}

@@ -1,0 +1,209 @@
+/*!
+ * Button System - Vanguard Technologies
+ * Unified button components with consistent styling
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   BASE BUTTON TEMPLATE
+   Shared properties for all buttons
+   ========================================== */
+.btn,
+.primary-btn,
+.nav-cta-btn,
+.service-secondary-btn,
+.mobile-contact-btn,
+.solutions-contact-btn,
+.mobile-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-left: none;
+    border-right: none;
+    background-color: var(--transparent);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+/* ==========================================
+   PRIMARY BUTTON
+   Main CTA button used across pages
+   ========================================== */
+.primary-btn {
+    color: var(--text-white);
+    font-size: 16px;
+    width: 194px;
+    min-height: 54px;
+    padding: 12px 10px;
+    margin-top: clamp(30px, 5vw, 68px);
+    border-top: 1px solid var(--btn-border);
+    border-bottom: 1px solid var(--btn-border);
+}
+
+.primary-btn:hover,
+.primary-btn:focus-visible {
+    color: var(--text-white);
+    border-top-color: var(--system-hover-stroke);
+    border-bottom-color: var(--system-hover-stroke);
+    background-color: var(--btn-hover-bg-soft);
+    outline: none;
+}
+
+/* ==========================================
+   NAVIGATION CTA BUTTON (Header)
+   Contact Us button in header
+   ========================================== */
+.nav-cta-btn {
+    color: var(--text-white);
+    font-size: 16px;
+    width: 194px;
+    min-height: 54px;
+    padding: 12px 10px;
+    border-top: 1px solid var(--btn-border);
+    border-bottom: 1px solid var(--btn-border);
+}
+
+.nav-cta-btn:hover,
+.nav-cta-btn:focus-visible {
+    color: var(--text-white);
+    border-top-color: var(--system-hover-stroke);
+    border-bottom-color: var(--system-hover-stroke);
+    background-color: var(--btn-hover-bg-soft);
+    outline: none;
+}
+
+/* ==========================================
+   SECONDARY BUTTON
+   Subtle text-only button
+   ========================================== */
+.secondary-btn {
+    color: var(--text-muted);
+    font-family: monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-top: 20px;
+    transition: color var(--transition-fast);
+}
+
+.secondary-btn:hover {
+    color: var(--text-white);
+}
+
+/* ==========================================
+   SERVICE DETAIL BUTTON
+   Used in service detail pages
+   ========================================== */
+.service-secondary-btn {
+    width: 194px;
+    min-height: 54px;
+    margin-top: clamp(28px, 7vh, 84px);
+    margin-bottom: 0;
+    color: var(--text-white);
+    border-top: 1px solid var(--btn-border);
+    border-bottom: 1px solid var(--btn-border);
+    font-size: 16px;
+}
+
+.service-secondary-btn:hover,
+.service-secondary-btn:focus-visible {
+    border-top-color: var(--system-hover-stroke);
+    border-bottom-color: var(--system-hover-stroke);
+    outline: none;
+}
+
+/* ==========================================
+   MOBILE-SPECIFIC BUTTONS
+   Visible only on mobile devices (< 600px)
+   ========================================== */
+
+/* Mobile Contact Button - Above title on mobile */
+.mobile-contact-btn {
+    display: none;
+    color: var(--text-white);
+    font-size: 14px;
+    width: 50%;
+    min-height: 48px;
+    padding: 12px 10px;
+    margin-bottom: 32px;
+    margin-left: auto;
+    border-top: 1px solid var(--btn-border);
+    border-bottom: 1px solid var(--btn-border);
+}
+
+.mobile-contact-btn:hover,
+.mobile-contact-btn:focus-visible {
+    color: var(--text-white);
+    border-top-color: var(--system-hover-stroke);
+    border-bottom-color: var(--system-hover-stroke);
+    background-color: var(--btn-hover-bg-soft);
+    outline: none;
+}
+
+/* Solutions Contact Button - Below wireframe on mobile */
+.solutions-contact-btn {
+    display: none;
+    color: var(--text-white);
+    font-size: 14px;
+    width: 50%;
+    min-height: 48px;
+    padding: 12px 10px;
+    border-top: 1px solid var(--btn-border);
+    border-bottom: 1px solid var(--btn-border);
+    order: 1;
+}
+
+.solutions-contact-btn:hover,
+.solutions-contact-btn:focus-visible {
+    color: var(--text-white);
+    border-top-color: var(--system-hover-stroke);
+    border-bottom-color: var(--system-hover-stroke);
+    background-color: var(--btn-hover-bg-soft);
+    outline: none;
+}
+
+/* Mobile Navigation Button - Footer navigation */
+.mobile-nav-btn {
+    display: none;
+}
+
+/* ==========================================
+   TOUCH DEVICE OPTIMIZATIONS
+   Prevent sticky hover states on touch devices
+   ========================================== */
+@media (hover: none) and (pointer: coarse) {
+    .primary-btn:hover,
+    .nav-cta-btn:hover,
+    .mobile-contact-btn:hover,
+    .solutions-contact-btn:hover {
+        color: inherit;
+        background: inherit;
+        border-color: inherit;
+    }
+    
+    /* Use :active instead of :hover */
+    .primary-btn:active,
+    .nav-cta-btn:active,
+    .mobile-contact-btn:active,
+    .solutions-contact-btn:active {
+        background-color: var(--btn-hover-bg-soft);
+        border-top-color: var(--system-hover-stroke);
+        border-bottom-color: var(--system-hover-stroke);
+    }
+}
+
+/* ==========================================
+   BUTTON ACTIVE STATES
+   Press effect for better feedback
+   ========================================== */
+button:active,
+.primary-btn:active,
+.nav-cta-btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}

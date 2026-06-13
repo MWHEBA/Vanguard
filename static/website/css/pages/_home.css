@@ -1,0 +1,39 @@
+/*!
+ * Home Page Styles - Vanguard Technologies
+ * Page-specific styling for the homepage
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   HOME PAGE SPECIFIC OVERRIDES
+   ========================================== */
+.home-page-bg .content-left {
+    width: 100%;
+    height: 90%;
+    max-width: 950px;
+    padding-left: 48px;
+    padding-top: 0;
+    justify-content: center;
+}
+
+.home-page-bg h1.page-title {
+    font-family: 'Lalezar', Inter, sans-serif;
+    font-size: 56px;
+    line-height: 1.35;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+.home-page-bg .page-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    line-height: 38px;
+    color: var(--text-desc);
+    max-width: 884px;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.home-page-bg .primary-btn {
+    margin-top: 68px;
+}

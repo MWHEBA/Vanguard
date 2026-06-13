@@ -1,0 +1,590 @@
+/*!
+ * Tablet Responsive Styles - Vanguard Technologies
+ * Optimized for tablet devices (600px - 1023px)
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   TABLET LANDSCAPE (768px - 1023px)
+   ========================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+    html, body {
+        overflow-x: hidden;
+    }
+    
+    header {
+        padding: 0 clamp(24px, 4vw, 48px);
+        height: 80px;
+    }
+    
+    .logo-container img {
+        width: 220px;
+        height: auto;
+    }
+    
+    .nav-cta-btn {
+        width: 170px;
+        min-height: 48px;
+        font-size: 14px;
+    }
+    
+    .main-content {
+        height: calc(100vh - 150px);
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .content-left {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+        padding: clamp(24px, 4vw, 40px);
+        border-right: none;
+        justify-content: center;
+    }
+    
+    .content-right {
+        width: 100%;
+        height: 50vh;
+        min-height: 400px;
+    }
+    
+    .home-page-bg .content-left {
+        width: 100%;
+        max-width: 100%;
+        padding: clamp(32px, 5vw, 48px);
+        justify-content: center;
+        min-height: 60vh;
+    }
+    
+    h1.page-title {
+        font-size: clamp(32px, 5vw, 44px);
+        margin-bottom: 20px;
+    }
+    
+    .home-page-bg h1.page-title {
+        font-size: clamp(38px, 5.5vw, 48px);
+        line-height: 1.25;
+    }
+    
+    .page-description {
+        font-size: clamp(16px, 2.5vw, 20px);
+        line-height: 1.5;
+    }
+    
+    .home-page-bg .page-description {
+        font-size: clamp(18px, 3vw, 24px);
+        max-width: 100%;
+    }
+    
+    .primary-btn {
+        margin-top: clamp(32px, 5vw, 48px);
+        width: 180px;
+        min-height: 50px;
+    }
+    
+    /* Solutions Page - Tablet Landscape */
+    .solutions-reference {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 24px;
+        padding: clamp(24px, 4vw, 40px);
+    }
+    
+    .solutions-title {
+        width: auto;
+        font-size: 32px;
+        align-self: flex-start;
+    }
+    
+    .solutions-map {
+        width: 100%;
+        max-width: 680px;
+        align-self: center;
+    }
+    
+    /* Service Detail - Tablet Landscape */
+    .service-detail {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 48px clamp(24px, 4vw, 40px);
+        align-items: flex-start;
+    }
+    
+    .service-detail-copy {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .service-detail-heading {
+        width: auto;
+        height: auto;
+    }
+    
+    .service-detail-description {
+        width: 100%;
+        max-width: 100%;
+        font-size: 20px;
+    }
+    
+    .service-secondary-btn {
+        margin-top: clamp(32px, 5vh, 56px);
+    }
+    
+    .service-detail-visual {
+        width: 100%;
+        max-width: 560px;
+        height: auto;
+        aspect-ratio: 610 / 490;
+        align-self: center;
+    }
+    
+    .service-detail-visual img {
+        width: 75%;
+        height: auto;
+        left: 12.5%;
+    }
+    
+    .service-specs-btn {
+        top: 88%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .service-detail-vulture_uavs .service-detail,
+    .service-detail-skyguard .service-detail,
+    .service-detail-tactical_data_link .service-detail {
+        grid-template-columns: 1fr;
+        padding-top: 48px;
+    }
+    
+    .service-detail-vulture_uavs .service-detail-description,
+    .service-detail-skyguard .service-detail-description,
+    .service-detail-tactical_data_link .service-detail-description {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .service-detail-carousel {
+        width: 100%;
+        max-width: 560px;
+        height: auto;
+        aspect-ratio: 610 / 584;
+        align-self: center;
+    }
+    
+    .service-vulture-drone {
+        width: 78%;
+        height: auto;
+        left: 11%;
+    }
+    
+    .service-skyguard-radar {
+        width: 58%;
+        height: 76%;
+        top: 3%;
+        left: 21%;
+    }
+    
+    .service-detail-carousel .service-carousel-image {
+        width: 88%;
+        height: 70%;
+        top: 3%;
+        left: 6%;
+    }
+    
+    .service-detail-skyguard .service-detail-carousel .service-carousel-image {
+        width: 64%;
+        height: 74%;
+        top: 2%;
+        left: 18%;
+    }
+    
+    .service-visual-caption {
+        top: 81%;
+    }
+    
+    .service-visual-arrow {
+        top: 87%;
+    }
+    
+    .service-detail-carousel .service-specs-btn {
+        top: 93%;
+        left: 50%;
+    }
+    
+    footer {
+        padding: clamp(16px, 3vw, 28px) clamp(24px, 4vw, 48px);
+        height: 70px;
+        font-size: 0.75rem;
+    }
+    
+    .footer-copyright {
+        font-size: 0.75rem;
+    }
+
+    /* Contact Page - Tablet Landscape */
+    .contact-form-container {
+        gap: 18px;
+    }
+    
+    .form-row {
+        gap: 12px !important;
+    }
+    
+    .form-label {
+        width: 95px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .form-input,
+    .form-input-phone {
+        height: 42px;
+        font-size: 15px;
+    }
+    
+    .form-textarea {
+        min-height: 120px;
+        font-size: 15px;
+    }
+    
+    .country-selector {
+        width: 100px;
+        height: 42px;
+    }
+}
+
+
+/* ==========================================
+   TABLET PORTRAIT (600px - 767px)
+   ========================================== */
+@media (min-width: 600px) and (max-width: 767px) {
+    html, body {
+        overflow-x: hidden;
+    }
+    
+    header {
+        padding: 0 clamp(20px, 4vw, 32px);
+        height: 75px;
+    }
+    
+    .logo-container img {
+        width: 200px;
+        height: auto;
+    }
+    
+    .nav-cta-btn {
+        width: 160px;
+        min-height: 48px;
+        font-size: 13px;
+    }
+    
+    .main-content {
+        height: calc(100vh - 145px);
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    .content-left {
+        width: 100%;
+        height: auto;
+        min-height: 45vh;
+        padding: clamp(20px, 4vw, 36px);
+        border-right: none;
+        justify-content: center;
+    }
+    
+    .content-right {
+        width: 100%;
+        height: 45vh;
+        min-height: 360px;
+    }
+    
+    .home-page-bg .content-left {
+        width: 100%;
+        max-width: 100%;
+        padding: clamp(28px, 5vw, 40px);
+        justify-content: center;
+        min-height: 55vh;
+    }
+    
+    h1.page-title {
+        font-size: clamp(28px, 5.5vw, 38px);
+        margin-bottom: 18px;
+        line-height: 1.3;
+    }
+    
+    .home-page-bg h1.page-title {
+        font-size: clamp(32px, 6vw, 42px);
+        line-height: 1.2;
+    }
+    
+    .page-description {
+        font-size: clamp(15px, 2.8vw, 18px);
+        line-height: 1.55;
+    }
+    
+    .home-page-bg .page-description {
+        font-size: clamp(16px, 3.2vw, 20px);
+        line-height: 1.45;
+        max-width: 100%;
+    }
+    
+    .primary-btn {
+        margin-top: clamp(28px, 5vw, 40px);
+        width: 170px;
+        min-height: 48px;
+        font-size: 15px;
+    }
+    
+    .solutions-reference {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 20px;
+        padding: clamp(20px, 4vw, 36px);
+    }
+    
+    .solutions-title {
+        width: auto;
+        font-size: 30px;
+        align-self: flex-start;
+    }
+    
+    .solutions-map {
+        width: 100%;
+        max-width: 600px;
+        align-self: center;
+    }
+    
+    .service-detail {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 40px clamp(20px, 4vw, 36px);
+        align-items: flex-start;
+    }
+    
+    .service-detail-copy {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .service-detail-description {
+        width: 100%;
+        font-size: 20px;
+        line-height: 1.45;
+    }
+    
+    .service-secondary-btn {
+        margin-top: clamp(28px, 5vh, 48px);
+        width: 180px;
+        min-height: 50px;
+    }
+    
+    .service-detail-visual {
+        width: 100%;
+        max-width: 520px;
+        height: auto;
+        aspect-ratio: 610 / 490;
+        align-self: center;
+    }
+    
+    .service-detail-visual img {
+        width: 76%;
+        height: auto;
+        left: 12%;
+    }
+    
+    .service-specs-btn {
+        width: 140px;
+        height: 44px;
+        font-size: 13px;
+        top: 88%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .service-detail-vulture_uavs .service-detail,
+    .service-detail-skyguard .service-detail,
+    .service-detail-tactical_data_link .service-detail {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+    }
+    
+    .service-detail-carousel {
+        width: 100%;
+        max-width: 520px;
+        height: auto;
+        aspect-ratio: 610 / 584;
+        align-self: center;
+    }
+    
+    .service-detail-carousel .service-specs-btn {
+        top: 92%;
+    }
+    
+    footer {
+        padding: clamp(14px, 3vw, 24px) clamp(20px, 4vw, 36px);
+        height: 65px;
+        font-size: 0.7rem;
+    }
+
+    /* Contact Page - Tablet Portrait */
+    .contact-page-bg .main-content {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - 145px);
+        overflow-y: auto;
+    }
+    
+    .contact-page-bg .content-left {
+        width: 100%;
+        min-height: auto;
+        padding: clamp(28px, 5vw, 40px);
+        justify-content: flex-start;
+    }
+    
+    .contact-page-bg .content-right {
+        width: 100%;
+        height: auto;
+        min-height: 400px;
+        padding: clamp(28px, 5vw, 40px);
+    }
+    
+    .contact-form-container {
+        gap: 18px;
+        max-width: 560px;
+        margin: 0 auto;
+    }
+    
+    .form-row {
+        gap: 12px !important;
+    }
+    
+    .form-label {
+        width: 90px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .form-input,
+    .form-input-phone {
+        height: 44px;
+        font-size: 15px;
+    }
+    
+    .form-textarea {
+        min-height: 130px;
+        font-size: 15px;
+    }
+    
+    .country-selector {
+        width: 98px;
+        height: 44px;
+    }
+    
+    .illustration-container {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    
+    .contact-card-overlay {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-top: 20px;
+        padding: 22px 26px;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .contact-card-cta {
+        font-size: 10px;
+    }
+    
+    .contact-card-link {
+        font-size: 14px;
+    }
+}
+
+
+/* ==========================================
+   SPECS MODAL - TABLET
+   ========================================== */
+@media (min-width: 600px) and (max-width: 1023px) {
+    .specs-modal {
+        padding: 16px;
+    }
+    
+    .specs-modal-panel {
+        width: min(90%, 640px);
+        min-height: 420px;
+        padding: 36px 32px;
+    }
+    
+    .specs-modal-close {
+        top: 16px;
+        right: 20px;
+        font-size: 38px;
+    }
+    
+    .specs-modal-product {
+        font-size: 19px;
+    }
+    
+    .specs-modal-form {
+        width: 100%;
+        margin-top: 36px;
+        gap: 22px;
+    }
+    
+    .specs-modal-row {
+        grid-template-columns: 105px minmax(0, 1fr);
+        gap: 14px;
+    }
+    
+    .specs-modal-label {
+        font-size: 15px;
+    }
+    
+    .specs-modal-input,
+    .specs-modal-country-selector {
+        height: 42px;
+        font-size: 15px;
+    }
+    
+    .specs-modal-phone {
+        grid-template-columns: 108px minmax(0, 1fr);
+    }
+    
+    .specs-modal-submit {
+        width: 140px;
+        height: 42px;
+        font-size: 13px;
+    }
+}
+
+/* ==========================================
+   EDGE CASES - IPAD PRO
+   ========================================== */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .solutions-map {
+        width: clamp(600px, 75vw, 760px);
+    }
+    
+    .service-detail-visual,
+    .service-detail-carousel {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+    .content-left {
+        width: 48%;
+    }
+    
+    .content-right {
+        width: 52%;
+    }
+}

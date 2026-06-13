@@ -1,0 +1,320 @@
+/*!
+ * Forms & Modal System - Vanguard Technologies
+ * Input fields, modals, and form components
+ * Version: 2.0.0
+ */
+
+/* ==========================================
+   SPECS MODAL (GET SPECS Form)
+   ========================================== */
+.specs-modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.62);
+}
+
+.specs-modal.is-open {
+    display: flex;
+}
+
+/* Modal Panel */
+.specs-modal-panel {
+    position: relative;
+    width: min(680px, 100%);
+    min-height: 452px;
+    border: 1px solid rgba(123, 123, 123, 0.78);
+    background: #121212;
+    padding: 38px 40px 38px 52px;
+}
+
+/* Modal Close Button */
+.specs-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 34px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    background: var(--transparent);
+    color: rgba(156, 163, 175, 0.82);
+    font-family: Arial, sans-serif;
+    font-size: 42px;
+    line-height: 30px;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.specs-modal-close:hover,
+.specs-modal-close:focus-visible {
+    color: var(--text-white);
+    outline: none;
+}
+
+/* Modal Product Title */
+.specs-modal-product {
+    color: var(--text-white);
+    font-family: 'Cairo', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+/* ==========================================
+   MODAL FORM
+   ========================================== */
+.specs-modal-form {
+    width: min(565px, 100%);
+    margin: 40px 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.specs-modal-row {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+}
+
+/* Form Labels */
+.specs-modal-label {
+    color: rgba(156, 163, 175, 0.84);
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+/* ==========================================
+   FORM INPUTS
+   ========================================== */
+.form-input,
+.specs-modal-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--input-border);
+    border-radius: 0;
+    background: var(--input-bg);
+    color: var(--text-white);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 0 12px;
+    transition: border-color var(--transition-fast);
+}
+
+.form-input:hover,
+.form-input:focus,
+.specs-modal-input:hover,
+.specs-modal-input:focus {
+    border-color: var(--system-hover-stroke);
+}
+
+/* Input Focus Enhancement */
+.form-input:focus,
+.specs-modal-input:focus {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.1);
+}
+
+/* ==========================================
+   PHONE INPUT WITH COUNTRY SELECTOR
+   ========================================== */
+.specs-modal-phone {
+    display: grid;
+    grid-template-columns: 114px minmax(0, 1fr);
+    gap: 0;
+}
+
+.specs-modal-phone-input {
+    border-left: 0;
+}
+
+/* Country Selector */
+.country-selector,
+.specs-modal-country-selector {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    padding: 0 12px;
+    color: rgba(156, 163, 175, 0.86);
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+    position: relative;
+}
+
+.country-selector:hover,
+.specs-modal-country-selector:hover,
+.country-selector:focus-visible,
+.specs-modal-country-selector:focus-visible {
+    border-color: var(--system-hover-stroke);
+    outline: none;
+}
+
+/* Flag Icon Styling */
+.country-selector .fi,
+.specs-modal-country-selector .fi {
+    font-size: 18px;
+    width: 22px;
+    height: 15px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}
+
+/* Country Dropdown */
+.country-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 320px;
+    max-height: 320px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    margin-top: 2px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.country-dropdown.is-open {
+    display: block;
+}
+
+.country-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.country-dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+   ========================================== */
+.specs-modal-submit {
+    width: 145px;
+    height: 40px;
+    align-self: flex-end;
+    margin-top: 0;
+    border: 1px solid rgba(123, 123, 123, 0.9);
+    border-radius: 0;
+    background: #2b2b2b;
+    color: rgba(156, 163, 175, 0.9);
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color var(--transition-fast), 
+                color var(--transition-fast), 
+                background-color var(--transition-fast);
+}
+
+.specs-modal-submit:hover,
+.specs-modal-submit:focus-visible {
+    border-color: var(--system-hover-stroke);
+    background-color: var(--accent-red);
+    color: var(--text-white);
+    outline: none;
+}
+
+/* ==========================================
+   CONTACT CARD OVERLAY
+   Used in contact page
+   ========================================== */
+.contact-card-overlay {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 28px;
+    background: rgba(23, 23, 23, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    transition: all var(--transition-medium);
+}
+
+.contact-card-overlay:hover {
+    background: rgba(23, 23, 23, 0.75);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Contact Card CTA Header */
+.contact-card-cta {
+    font-family: 'Cairo', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%;
+}
+
+/* Contact Card Links */
+.contact-card-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all var(--transition-fast);
+}
+
+.contact-card-link svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: all var(--transition-fast);
+}
+
+.contact-card-link:hover {
+    color: rgba(255, 255, 255, 1);
+    transform: translateX(3px);
+}
+
+.contact-card-link:hover svg {
+    opacity: 1;
+    stroke: rgba(227, 6, 19, 0.9);
+}
+
+/* Touch devices - prevent transform on hover */
+@media (hover: none) and (pointer: coarse) {
+    .contact-card-link:hover {
+        transform: none;
+    }
+    
+    .contact-card-link:active {
+        color: rgba(255, 255, 255, 1);
+        transform: translateX(2px);
+    }
+}

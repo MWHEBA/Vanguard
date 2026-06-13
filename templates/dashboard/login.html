@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover">
+    <title>{% if site_settings %}{{ site_settings.site_name }}{% else %}Vanguard Technologies{% endif %} | Operator Sign In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&family=Montserrat:wght@300;400;600&display=swap">
+    <link rel="icon" type="image/png" href="{{ site_favicon_url }}">
+    
+    <!-- Load main design system CSS variables and layout modules -->
+    <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+    
+    <style>
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: var(--spacing-md);
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .login-logo {
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .login-logo img {
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .login-card {
+            width: 100%;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--line-soft);
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .login-header {
+            text-align: center;
+            border-bottom: 1px solid var(--line-soft);
+            padding-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .login-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-white);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .login-subtitle {
+            font-family: monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            color: var(--accent-red);
+            text-transform: uppercase;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+        
+        .form-label {
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-soft);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        .login-input {
+            width: 100%;
+            height: 42px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text-white);
+            font-family: inherit;
+            font-size: 0.95rem;
+            padding: 0 var(--spacing-sm);
+            outline: none;
+            transition: border-color var(--transition-fast);
+        }
+        
+        .login-input:hover,
+        .login-input:focus {
+            border-color: var(--system-hover-stroke);
+        }
+        
+        .login-input:focus {
+            border-color: var(--accent-red);
+        }
+        
+        .login-btn {
+            width: 100%;
+            height: 46px;
+            margin-top: var(--spacing-sm);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-white);
+            border-top: 1px solid var(--btn-border);
+            border-bottom: 1px solid var(--btn-border);
+            border-left: none;
+            border-right: none;
+            background-color: var(--transparent);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .login-btn:hover,
+        .login-btn:focus-visible {
+            border-top-color: var(--system-hover-stroke);
+            border-bottom-color: var(--system-hover-stroke);
+            background-color: var(--btn-hover-bg-soft);
+            outline: none;
+        }
+        
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .error-container {
+            border-left: 3px solid var(--accent-red);
+            background-color: var(--bg-primary);
+            border-top: 1px solid var(--line-soft);
+            border-bottom: 1px solid var(--line-soft);
+            border-right: 1px solid var(--line-soft);
+            padding: var(--spacing-sm);
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .error-list {
+            margin: 0;
+            padding-left: var(--spacing-md);
+        }
+        
+        .back-to-site {
+            margin-top: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .back-link {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            transition: color var(--transition-fast);
+            text-transform: uppercase;
+        }
+        
+        .back-link:hover {
+            color: var(--text-white);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="login-logo">
+            {% if site_logo_url %}
+                <img src="{{ site_logo_url }}" alt="Vanguard Technologies">
+            {% else %}
+                <img src="https://api.builder.io/api/v1/image/assets/01911da14ded49aeae63dafe748182e7/35fbba448c0e707b872a4578bc9d3c87b156075c?placeholderIfAbsent=true" alt="Vanguard Technologies">
+            {% endif %}
+        </div>
+        
+        <!-- Login Card -->
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-title">Operator Sign In</div>
+                <div class="login-subtitle">Vanguard Control Surface</div>
+            </div>
+            
+            {% if form.errors %}
+                <div class="error-container" role="alert">
+                    <ul class="error-list">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            
+            <form method="POST" action="{% url 'dashboard:login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                {% csrf_token %}
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <div class="form-group">
+                        <label class="form-label" for="id_username">Operator ID / Username</label>
+                        <input type="text" name="username" id="id_username" class="login-input" required autofocus autocomplete="username">
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: var(--spacing-xs);">
+                        <label class="form-label" for="id_password">Security Key / Password</label>
+                        <input type="password" name="password" id="id_password" class="login-input" required autocomplete="current-password">
+                    </div>
+                    
+                    <button type="submit" class="login-btn">Authenticate</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Back Link -->
+        <div class="back-to-site">
+            <a href="{% url 'home' %}" class="back-link">&larr; Return to Public Site</a>
+        </div>
+    </div>
+</body>
+</html>

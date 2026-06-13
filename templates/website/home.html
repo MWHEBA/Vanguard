@@ -5,6 +5,7 @@
 {% block content %}
 <!-- الجانب الأيسر: العنوان والنصوص التعريفية من ملف الفيغما -->
 <div class="content-left">
+    <a href="{% url 'contact' %}" class="mobile-contact-btn">CONTACT US</a>
     <h1 class="page-title">
         {% if home_content %}
             {{ home_content.hero_title|linebreaksbr }}
