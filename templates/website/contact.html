@@ -12,7 +12,7 @@
 
 {% block content %}
 <!-- الجانب الأيسر: فورم التواصل الأفقي التفاعلي -->
-<div class="content-left" style="width: 50%; justify-content: center; align-items: stretch; padding-top: 0; position: relative;">
+<div class="content-left contact-content-left">
     <!-- رسائل Django المخفية (للـ JavaScript) -->
     {% if messages %}
         {% for message in messages %}
@@ -20,57 +20,51 @@
         {% endfor %}
     {% endif %}
 
-    <form method="POST" action="{% url 'contact' %}" class="contact-form-container"
-        style="display: flex; flex-direction: column; gap: 20px;">
+    <form method="POST" action="{% url 'contact' %}" class="contact-form-container">
         {% csrf_token %}
 
         <!-- حقل المنظمة -->
-        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
-            <label class="form-label"
-                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">ORGANIZATION</label>
-            <div style="flex-grow: 1;">
+        <div class="form-row">
+            <label class="form-label">ORGANIZATION</label>
+            <div class="form-field-wrapper">
                 {{ form.organization }}
             </div>
         </div>
 
         <!-- حقل الاسم -->
-        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
-            <label class="form-label"
-                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">NAME</label>
-            <div style="flex-grow: 1;">
+        <div class="form-row">
+            <label class="form-label">NAME</label>
+            <div class="form-field-wrapper">
                 {{ form.name }}
             </div>
         </div>
 
         <!-- حقل البريد الإلكتروني -->
-        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
-            <label class="form-label"
-                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">EMAIL</label>
-            <div style="flex-grow: 1;">
+        <div class="form-row">
+            <label class="form-label">EMAIL</label>
+            <div class="form-field-wrapper">
                 {{ form.email }}
             </div>
         </div>
 
         <!-- حقل رقم الهاتف مع كود وعلم مصر -->
-        <div class="form-row" style="display: flex; align-items: center; gap: 15px;">
-            <label class="form-label"
-                style="width: 100px; text-align: right; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em;">PHONE</label>
-            <div style="flex-grow: 1; display: flex; gap: 0; align-items: center;">
+        <div class="form-row">
+            <label class="form-label">PHONE</label>
+            <div class="form-phone-wrapper">
                 <div class="country-selector" data-country-code="+20">
                     <!-- علم مصر -->
                     <span class="fi fi-eg" style="font-size: 18px;"></span>
-                    <span
-                        style="color: var(--text-white); font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 600;">+20</span>
-                    <span style="color: var(--text-muted); font-size: 0.65rem; margin-left: 2px;">v</span>
+                    <span class="country-prefix">+20</span>
+                    <span class="country-caret">v</span>
                 </div>
-                <div style="flex-grow: 1;">
+                <div class="form-field-wrapper">
                     {{ form.phone }}
                 </div>
             </div>
         </div>
 
         <!-- حقل الرسالة - كامل العرض -->
-        <div class="message-row" style="width: 100%; margin-top: 10px;">
+        <div class="message-row">
             {{ form.message }}
         </div>
 
@@ -108,14 +102,10 @@
 </div>
 
 <!-- الجانب الأيمن: واير فريم الخريطة -->
-<div class="content-right"
-    style="width: 50%; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; padding-top: 40px; padding-bottom: 20px; position: relative;">
-    
+<div class="content-right contact-content-right">
     <!-- الخريطة التكتيكية لإفريقيا والشرق الأوسط -->
-    <div class="illustration-container"
-        style="width: 100%; max-width: 589px; height: auto; display: flex; justify-content: flex-end; align-items: center; overflow: visible; position: relative;">
-        <img src="{% static 'website/images/v2070_311.png' %}" alt="Operations Map"
-            style="width: 100%; height: auto; display: block; max-width: 509px; max-height: 589px;" />
+    <div class="illustration-container">
+        <img src="{% static 'website/images/v2070_311.png' %}" alt="Operations Map" class="contact-map-image" />
     </div>
 </div>
 

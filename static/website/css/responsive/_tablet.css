@@ -253,7 +253,19 @@
         width: 100px;
         height: 42px;
     }
+    
+    .contact-content-left {
+        width: 100%;
+        min-height: 50vh;
+    }
+    
+    .contact-content-right {
+        width: 100%;
+        height: 50vh;
+        min-height: 400px;
+    }
 }
+
 
 
 /* ==========================================
@@ -510,7 +522,22 @@
     .contact-links-row {
         margin-left: 102px;
     }
+
+    .contact-content-left {
+        width: 100%;
+        min-height: auto;
+        padding: clamp(28px, 5vw, 40px);
+        justify-content: flex-start;
+    }
+    
+    .contact-content-right {
+        width: 100%;
+        height: auto;
+        min-height: 400px;
+        padding: clamp(28px, 5vw, 40px);
+    }
 }
+
 
 
 
