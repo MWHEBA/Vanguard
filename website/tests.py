@@ -206,7 +206,7 @@ class PhaseTwoDashboardTests(TestCase):
         response = self.client.get(reverse("dashboard:index"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertIn("/admin/login/", response.url)
+        self.assertIn("/dashboard/login/", response.url)
 
     def test_non_staff_user_cannot_access_dashboard(self):
         self.client.login(username="viewer", password="secure-pass")
@@ -214,7 +214,7 @@ class PhaseTwoDashboardTests(TestCase):
         response = self.client.get(reverse("dashboard:index"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertIn("/admin/login/", response.url)
+        self.assertIn("/dashboard/login/", response.url)
 
     def test_staff_user_can_access_dashboard(self):
         self.client.login(username="ops", password="secure-pass")

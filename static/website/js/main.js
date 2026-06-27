@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.documentElement.classList.add("is-ready");
 
     // Country Selector with Flag Icons - Complete List
-    const countrySelector = document.querySelector(".country-selector");
+    const countrySelector = document.querySelector(".contact-phone-wrapper .country-selector");
     if (countrySelector) {
         const allCountries = [
             {code:"+93",name:"Afghanistan",iso:"af"},{code:"+355",name:"Albania",iso:"al"},
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const openDropdown = () => {
             dropdown = document.createElement("div");
-            dropdown.className = "country-dropdown";
+            dropdown.className = "country-dropdown is-open";
             
             const searchBox = document.createElement("div");
             searchBox.className = "country-search-container";
@@ -457,7 +457,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const openDropdown = () => {
             dropdown = document.createElement("div");
-            dropdown.className = "country-dropdown";
+            dropdown.className = "country-dropdown is-open";
             
             const searchBox = document.createElement("div");
             searchBox.className = "country-search-container";

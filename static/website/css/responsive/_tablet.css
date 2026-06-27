@@ -13,6 +13,7 @@
     }
     
     header {
+        margin: 2%;
         padding: 0 clamp(24px, 4vw, 48px);
         height: 80px;
     }
@@ -277,6 +278,7 @@
     }
     
     header {
+        margin: 2%;
         padding: 0 clamp(20px, 4vw, 32px);
         height: 75px;
     }

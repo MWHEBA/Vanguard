@@ -31,26 +31,24 @@
     <div class="service-detail-visual{% if solution.show_visual_nav %} service-detail-carousel{% endif %}">
         {% if solution.show_visual_nav and solution.visuals.0.image %}
             <img
-                class="service-carousel-image"
+                class="service-carousel-image{% if solution.visuals.0.image|slice:"-4:"|lower == ".glb" %} hidden{% endif %}"
                 data-service-image
                 src="{{ solution.visuals.0.image }}"
                 alt="{{ solution.visuals.0.title }}"
-                style="{% if solution.visuals.0.image|slice:"-4:"|lower == ".glb" %}display: none;{% endif %}"
             >
             <model-viewer
-                class="service-carousel-image"
+                class="service-carousel-image{% if solution.visuals.0.image|slice:"-4:"|lower != ".glb" %} hidden{% endif %}"
                 data-service-model
                 src="{{ solution.visuals.0.image }}"
                 alt="{{ solution.visuals.0.title }}"
                 auto-rotate
                 camera-controls
                 touch-action="pan-y"
-                style="{% if solution.visuals.0.image|slice:"-4:"|lower != ".glb" %}display: none;{% endif %}"
             ></model-viewer>
         {% elif solution.image %}
             {% if solution.image|slice:"-4:"|lower == ".glb" %}
                 <model-viewer
-                    style="width: 439px; height: 406px; position: absolute; top: 0; left: 85px; display: block;"
+                    style="position: absolute; top: 0; display: block;"
                     src="{{ solution.image }}"
                     alt="{{ solution.title }} 3D model"
                     auto-rotate

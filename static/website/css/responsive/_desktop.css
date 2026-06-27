@@ -8,6 +8,22 @@
    DESKTOP STANDARD (> 1024px)
    ========================================== */
 @media (min-width: 1024px) {
+    header,
+    .main-content,
+    footer {
+        max-width: 1400px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    header {
+        margin-top: 2%;
+        margin-bottom: 2%;
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+    
     /* Layout maintained from base styles */
     .content-left {
         width: 50%;
@@ -20,32 +36,9 @@
     .service-detail {
         grid-template-columns: minmax(420px, 589px) minmax(439px, 1fr);
     }
-}
 
-/* ==========================================
-   LARGE DESKTOP (> 1400px)
-   Container constraint for better readability
-   ========================================== */
-@media (min-width: 1400px) {
-    header,
-    .main-content,
-    footer {
-        max-width: 1400px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-/* ==========================================
-   EXTRA LARGE DESKTOP (> 1920px)
-   Full HD and higher
-   ========================================== */
-@media (min-width: 1920px) {
-    /* Keep max-width constraint */
-    header,
-    .main-content,
-    footer {
-        max-width: 1400px;
+    .service-detail-visual img {
+        left: 15%;
     }
 }
 
@@ -111,11 +104,7 @@
     :root {
         --text-muted: #a8a8a8;
         --line-soft: rgba(255, 255, 255, 0.14);
-    }
-    
-    .form-input,
-    .specs-modal-input {
-        background-color: #151515;
+        --input-bg: #151515;
     }
 }
 

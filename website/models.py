@@ -31,7 +31,7 @@ class SiteSettings(models.Model):
     linkedin_url = models.URLField(blank=True)
     footer_text = models.CharField(
         max_length=160,
-        default="ALL RIGHTS RESERVED 2026 (C) VANGUARD TECHNOLOGIES",
+        default="ALL RIGHTS RESERVED 2026 © VANGUARD TECHNOLOGIES",
     )
     logo_path = models.CharField(max_length=255, blank=True)
     logo = models.FileField(upload_to="site-branding/", blank=True)

@@ -24,91 +24,84 @@
         {% csrf_token %}
 
         <!-- حقل المنظمة -->
-        <div class="form-row">
-            <label class="form-label">ORGANIZATION</label>
-            <div class="form-field-wrapper">
+        <div class="contact-field-row">
+            <label class="contact-field-label">ORGANIZATION</label>
+            <div class="contact-field-wrapper">
                 {{ form.organization }}
             </div>
         </div>
 
         <!-- حقل الاسم -->
-        <div class="form-row">
-            <label class="form-label">NAME</label>
-            <div class="form-field-wrapper">
+        <div class="contact-field-row">
+            <label class="contact-field-label">NAME</label>
+            <div class="contact-field-wrapper">
                 {{ form.name }}
             </div>
         </div>
 
         <!-- حقل البريد الإلكتروني -->
-        <div class="form-row">
-            <label class="form-label">EMAIL</label>
-            <div class="form-field-wrapper">
+        <div class="contact-field-row">
+            <label class="contact-field-label">EMAIL</label>
+            <div class="contact-field-wrapper">
                 {{ form.email }}
             </div>
         </div>
 
         <!-- حقل رقم الهاتف مع كود وعلم مصر -->
-        <div class="form-row">
-            <label class="form-label">PHONE</label>
-            <div class="form-phone-wrapper">
+        <div class="contact-field-row">
+            <label class="contact-field-label">PHONE</label>
+            <div class="contact-phone-wrapper">
                 <div class="country-selector" data-country-code="+20">
                     <!-- علم مصر -->
-                    <span class="fi fi-eg" style="font-size: 18px;"></span>
+                    <span class="fi fi-eg"></span>
                     <span class="country-prefix">+20</span>
                     <span class="country-caret">v</span>
                 </div>
-                <div class="form-field-wrapper">
+                <div class="contact-field-wrapper">
                     {{ form.phone }}
                 </div>
             </div>
         </div>
 
         <!-- حقل الرسالة - كامل العرض -->
-        <div class="message-row">
+        <div class="contact-message-row">
             {{ form.message }}
         </div>
 
-        <!-- زر الإرسال محاذى لليمين أسفل التكست إريا -->
-        <div class="submit-row">
+        <!-- صف الإرسال واللينكد إن -->
+        <div class="contact-action-row">
+            <div class="contact-linkedin-container">
+                <a href="{% if site_settings.linkedin_url %}{{ site_settings.linkedin_url }}{% else %}https://linkedin.com{% endif %}" target="_blank" rel="noopener" class="contact-linkedin-link" aria-label="LinkedIn">
+                    <svg class="contact-linkedin-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="4" ry="4"></rect>
+                        <path d="M8 11v5"></path>
+                        <path d="M8 8v.5"></path>
+                        <path d="M12 16v-5"></path>
+                        <path d="M16 16v-3a2 2 0 0 0-4 0"></path>
+                    </svg>
+                </a>
+            </div>
             <button type="submit" class="submit-btn-rect">SEND</button>
         </div>
     </form>
-
-    <!-- روابط الاتصال المباشرة بدون فريمات -->
-    <div class="contact-links-row">
-        <!-- البريد الإلكتروني -->
-        <a href="mailto:{{ site_settings.contact_email }}" class="contact-card-link">
-            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="1" y="1" width="16" height="12" rx="1.5" />
-                <polyline points="1,2 9,8 17,2" />
-            </svg>
-            <span>{{ site_settings.contact_email|upper }}</span>
-        </a>
-        
-        <!-- لينكد إن -->
-        {% if site_settings.linkedin_url %}
-        <a href="{{ site_settings.linkedin_url }}" target="_blank" rel="noopener" class="contact-card-link">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="4" ry="4"></rect>
-                <path d="M8 11v5"></path>
-                <path d="M8 8v.5"></path>
-                <path d="M12 16v-5"></path>
-                <path d="M16 16v-3a2 2 0 0 0-4 0"></path>
-            </svg>
-            <span>/VANGUARD</span>
-        </a>
-        {% endif %}
-    </div>
+    
+    <a href="{% url 'solutions' %}" class="mobile-nav-btn">OUR SOLUTIONS</a>
 </div>
 
-<!-- الجانب الأيمن: واير فريم الخريطة -->
+<!-- الجانب الأيمن: الخريطة تظل موجودة في الـ HTML ولكن يتم إخفاؤها في الـ CSS -->
 <div class="content-right contact-content-right">
-    <!-- الخريطة التكتيكية لإفريقيا والشرق الأوسط -->
     <div class="illustration-container contact-illustration-container">
         <img src="{% static 'website/images/v2070_311.png' %}" alt="Operations Map" class="contact-map-image" />
     </div>
 </div>
+{% endblock %}
 
+{% block footer_copyright %}
+<div class="contact-footer-info">
+    <div>INFO@VANGUARD.EG</div>
+    <div>ALL RIGHTS RESERVED 2026</div>
+    <div>VANGUARD TECHNOLOGIES.</div>
+</div>
 {% endblock %}
 
 {% block extra_js %}

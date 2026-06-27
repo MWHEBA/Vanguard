@@ -110,3 +110,7 @@ img {
 img[loading="lazy"]:not([src]) {
     opacity: 0;
 }
+
+.hidden {
+    display: none !important;
+}

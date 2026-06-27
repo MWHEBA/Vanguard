@@ -24,7 +24,7 @@ SITE_SETTINGS = {
     "contact_email": "info@vanguard.example",
     "contact_phone": "",
     "linkedin_url": "",
-    "footer_text": "ALL RIGHTS RESERVED 2026 (C) VANGUARD TECHNOLOGIES",
+    "footer_text": "ALL RIGHTS RESERVED 2026 © VANGUARD TECHNOLOGIES",
     "is_active": True,
 }
 

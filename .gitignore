@@ -4,3 +4,10 @@ __pycache__/
 db.sqlite3
 .env
 *.log
+
+# SSH Keys and deploy files
+id_rsa
+.deploy_hashes.json
+deploy_logs/
+staticfiles/
+media/
