@@ -364,7 +364,116 @@ class PhaseTwoDashboardTests(TestCase):
         superuser.refresh_from_db()
         self.assertTrue(superuser.is_active)
 
+    def test_superuser_can_add_user(self):
+        superuser = User.objects.create_superuser(
+            username="admin-user",
+            email="admin@example.com",
+            password="secure-pass",
+        )
+        self.client.login(username="admin-user", password="secure-pass")
+        
+        # Test GET
+        response = self.client.get(reverse("dashboard:user_add"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Add New User")
+
+        # Test POST
+        response = self.client.post(reverse("dashboard:user_add"), {
+            "username": "new-staff",
+            "email": "new@example.com",
+            "first_name": "New",
+            "last_name": "Staff",
+            "is_staff": True,
+            "is_superuser": False,
+            "is_active": True,
+            "password": "new-secure-pass",
+        })
+        self.assertRedirects(response, reverse("dashboard:users"))
+        self.assertTrue(User.objects.filter(username="new-staff").exists())
+
+    def test_staff_user_cannot_add_user(self):
+        self.client.login(username="ops", password="secure-pass")
+        
+        # Test GET
+        response = self.client.get(reverse("dashboard:user_add"))
+        self.assertRedirects(response, reverse("dashboard:users"))
+        
+        # Test POST
+        response = self.client.post(reverse("dashboard:user_add"), {
+            "username": "new-staff-blocked",
+            "email": "blocked@example.com",
+            "first_name": "Blocked",
+            "last_name": "Staff",
+            "is_staff": True,
+            "is_superuser": False,
+            "is_active": True,
+            "password": "new-secure-pass",
+        })
+        self.assertRedirects(response, reverse("dashboard:users"))
+        self.assertFalse(User.objects.filter(username="new-staff-blocked").exists())
+
+    def test_superuser_can_edit_user(self):
+        superuser = User.objects.create_superuser(
+            username="admin-user",
+            email="admin@example.com",
+            password="secure-pass",
+        )
+        target = User.objects.create_user(
+            username="edit-target",
+            password="secure-pass",
+        )
+        self.client.login(username="admin-user", password="secure-pass")
+        
+        # Test GET
+        response = self.client.get(reverse("dashboard:user_edit", args=[target.pk]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Edit User")
+
+        # Test POST
+        response = self.client.post(reverse("dashboard:user_edit", args=[target.pk]), {
+            "username": "edit-target-updated",
+            "email": "updated@example.com",
+            "first_name": "Updated",
+            "last_name": "Name",
+            "is_staff": True,
+            "is_superuser": False,
+            "is_active": True,
+            "password": "", # Keep current password
+        })
+        self.assertRedirects(response, reverse("dashboard:users"))
+        target.refresh_from_db()
+        self.assertEqual(target.username, "edit-target-updated")
+        self.assertEqual(target.email, "updated@example.com")
+        self.assertTrue(target.is_staff)
+
+    def test_staff_user_cannot_edit_user(self):
+        target = User.objects.create_user(
+            username="edit-target",
+            password="secure-pass",
+        )
+        self.client.login(username="ops", password="secure-pass")
+        
+        # Test GET
+        response = self.client.get(reverse("dashboard:user_edit", args=[target.pk]))
+        self.assertRedirects(response, reverse("dashboard:users"))
+        
+        # Test POST
+        response = self.client.post(reverse("dashboard:user_edit", args=[target.pk]), {
+            "username": "edit-target-hacked",
+            "email": "hacked@example.com",
+            "first_name": "Hacked",
+            "last_name": "Name",
+            "is_staff": True,
+            "is_superuser": False,
+            "is_active": True,
+            "password": "",
+        })
+        self.assertRedirects(response, reverse("dashboard:users"))
+        target.refresh_from_db()
+        self.assertEqual(target.username, "edit-target")
+
     def test_inquiries_page_displays_messages(self):
+
         self.client.login(username="ops", password="secure-pass")
 
         response = self.client.get(reverse("dashboard:inquiries"))

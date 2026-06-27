@@ -21,4 +21,7 @@ urlpatterns = [
     path("solutions/<int:pk>/gallery/<int:visual_pk>/title/", dashboard_views.solution_gallery_title, name="solution_gallery_title"),
     path("solutions/<int:pk>/gallery/<int:visual_pk>/delete/", dashboard_views.solution_gallery_delete, name="solution_gallery_delete"),
     path("users/", dashboard_views.users, name="users"),
+    path("users/add/", dashboard_views.user_add, name="user_add"),
+    path("users/<int:pk>/edit/", dashboard_views.user_edit, name="user_edit"),
 ]
+

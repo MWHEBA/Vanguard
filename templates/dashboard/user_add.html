@@ -1,0 +1,33 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Add User{% endblock %}
+{% block heading %}Add New User{% endblock %}
+{% block kicker %}Create staff or regular user accounts{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+    <section class="panel form-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Account Credentials & Roles</h2>
+                <p class="panel-subtitle">Create a new account. Super admin features should be configured carefully.</p>
+            </div>
+            <a class="button secondary" href="{% url 'dashboard:users' %}">Back to directory</a>
+        </div>
+        <form class="stacked-form" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <label>
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {{ field.errors }}
+                </label>
+            {% endfor %}
+            <div class="sticky-actions">
+                <button class="button" type="submit">Create user</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

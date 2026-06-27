@@ -1,0 +1,33 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Edit User{% endblock %}
+{% block heading %}Edit User: {{ target_user.username }}{% endblock %}
+{% block kicker %}Update user profile, status, and permissions{% endblock %}
+
+{% block content %}
+<div class="detail-layout">
+    <section class="panel form-panel">
+        <div class="panel-heading">
+            <div>
+                <h2>Edit Account: {{ target_user.username }}</h2>
+                <p class="panel-subtitle">Modify user roles, activation status, or set a new password. Leave password field blank to keep current.</p>
+            </div>
+            <a class="button secondary" href="{% url 'dashboard:users' %}">Back to directory</a>
+        </div>
+        <form class="stacked-form" method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+                <label>
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {{ field.errors }}
+                </label>
+            {% endfor %}
+            <div class="sticky-actions">
+                <button class="button" type="submit">Save changes</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

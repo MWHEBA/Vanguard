@@ -38,6 +38,8 @@ from .dashboard_forms import (
     SiteBrandingDashboardForm,
     SolutionDashboardForm,
     SolutionVisualFormSet,
+    UserCreationDashboardForm,
+    UserEditDashboardForm,
 )
 from .models import ContactInquiry, HomePageContent, SiteSettings, Solution, SolutionVisual
 
@@ -443,6 +445,54 @@ def users(request):
         "metrics": metrics,
         "users": users_page,
     })
+
+
+@staff_member_required
+def user_add(request):
+    # Only superusers are allowed to add users
+    if not request.user.is_superuser:
+        messages.error(request, "Only superusers have permission to add new users.")
+        return redirect("dashboard:users")
+
+    if request.method == "POST":
+        form = UserCreationDashboardForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, f"User {user.username} has been created successfully.")
+            return redirect("dashboard:users")
+    else:
+        form = UserCreationDashboardForm()
+
+    return render(request, "dashboard/user_add.html", {
+        "current_dashboard_page": "users",
+        "form": form,
+    })
+
+
+@staff_member_required
+def user_edit(request, pk):
+    # Only superusers are allowed to edit users
+    if not request.user.is_superuser:
+        messages.error(request, "Only superusers have permission to edit users.")
+        return redirect("dashboard:users")
+
+    target_user = get_object_or_404(User, pk=pk)
+    
+    if request.method == "POST":
+        form = UserEditDashboardForm(request.POST, instance=target_user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"User {target_user.username} updated successfully.")
+            return redirect("dashboard:users")
+    else:
+        form = UserEditDashboardForm(instance=target_user)
+
+    return render(request, "dashboard/user_edit.html", {
+        "current_dashboard_page": "users",
+        "target_user": target_user,
+        "form": form,
+    })
+
 
 
 def reverse_query_url(route_name, **params):

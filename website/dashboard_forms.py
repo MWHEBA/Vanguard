@@ -240,3 +240,46 @@ class SiteBrandingDashboardForm(DashboardFormMixin, forms.ModelForm):
             instance.save()
             self.save_m2m()
         return instance
+
+
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+class UserCreationDashboardForm(DashboardFormMixin, forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(), label="Password", required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "is_staff", "is_superuser", "is_active")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_dashboard_classes()
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
+
+class UserEditDashboardForm(DashboardFormMixin, forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(), label="Password (leave blank to keep current)", required=False)
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "is_staff", "is_superuser", "is_active")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_dashboard_classes()
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if self.cleaned_data.get("password"):
+            user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
