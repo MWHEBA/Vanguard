@@ -36,7 +36,7 @@
 </nav>
 
 <section class="panel">
-    <form class="filter-bar user-filter-bar" method="get" style="display: flex; width: 100%; align-items: center; gap: var(--spacing-sm);">
+    <form class="filter-bar user-filter-bar" method="get" style="display: flex; width: 100%; align-items: center; gap: 10px;">
         <input class="dashboard-input" type="search" name="q" value="{{ filters.q }}" placeholder="Search username, name, or email" style="flex: 1; margin: 0;">
         <input type="hidden" name="status" value="{{ filters.status }}">
         <button class="button" type="submit" style="margin: 0;">Search</button>
@@ -46,6 +46,7 @@
         {% endif %}
     </form>
 </section>
+
 
 
 <section class="panel">
@@ -85,27 +86,26 @@
                             {% if user.pk == request.user.pk %}
                                 <span class="table-note">Current user</span>
                                 {% if request.user.is_superuser %}
-                                    <a class="table-action" href="{% url 'dashboard:user_edit' user.pk %}" style="margin-left: var(--spacing-sm);">Edit</a>
+                                    <a class="table-action" href="{% url 'dashboard:user_edit' user.pk %}">Edit</a>
                                 {% endif %}
                             {% elif user.is_superuser %}
                                 <span class="table-note">Admin only</span>
                                 {% if request.user.is_superuser %}
-                                    <a class="table-action" href="{% url 'dashboard:user_edit' user.pk %}" style="margin-left: var(--spacing-sm);">Edit</a>
+                                    <a class="table-action" href="{% url 'dashboard:user_edit' user.pk %}">Edit</a>
                                 {% endif %}
                             {% else %}
-                                <div style="display: flex; gap: var(--spacing-sm); align-items: center;">
-                                    {% if request.user.is_superuser %}
-                                        <a class="table-action" href="{% url 'dashboard:user_edit' user.pk %}">Edit</a>
-                                    {% endif %}
-                                    <form method="post" style="margin: 0;">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="user_id" value="{{ user.pk }}">
-                                        <input type="hidden" name="action" value="{% if user.is_active %}deactivate{% else %}activate{% endif %}">
-                                        <button class="table-action muted" type="submit" onclick="return confirm('Change account status for {{ user.username }}?')">{{ user.is_active|yesno:"Deactivate,Activate" }}</button>
-                                    </form>
-                                </div>
+                                {% if request.user.is_superuser %}
+                                    <a class="table-action" href="{% url 'dashboard:user_edit' user.pk %}">Edit</a>
+                                {% endif %}
+                                <form method="post" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.pk }}">
+                                    <input type="hidden" name="action" value="{% if user.is_active %}deactivate{% else %}activate{% endif %}">
+                                    <button class="table-action muted" type="submit" onclick="return confirm('Change account status for {{ user.username }}?')">{{ user.is_active|yesno:"Deactivate,Activate" }}</button>
+                                </form>
                             {% endif %}
                         </td>
+
 
                     </tr>
                 {% empty %}
