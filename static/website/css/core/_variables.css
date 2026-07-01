@@ -55,6 +55,40 @@
     --link-hover-color: #ffffff;
     
     /* ==========================================
+       REFACTORED STANDARD COLORS
+       ========================================== */
+    --overlay-bg: rgba(0, 0, 0, 0.62);
+    --overlay-panel: rgba(139, 139, 139, 0.96);
+    --bg-dark-panel: #121212;
+    --bg-btn-dark: #2b2b2b;
+    --text-muted-alt: #9ca3af;
+    --text-muted-light: rgba(255, 255, 255, 0.45);
+    --text-light-soft: rgba(255, 255, 255, 0.8);
+    --line-map: rgba(129, 129, 129, 0.92);
+    --line-border-very-soft: rgba(255, 255, 255, 0.08);
+    --line-border-soft: rgba(255, 255, 255, 0.14);
+    --line-border-ultra-soft: rgba(255, 255, 255, 0.06);
+    --btn-border-muted: rgba(156, 163, 175, 0.55);
+    --selection-bg: rgba(227, 6, 19, 0.3);
+    --fallback-hover-bg: rgba(227, 6, 19, 0.05);
+    --input-focus-light: #f9f9f9;
+    --text-muted-alt-84: rgba(156, 163, 175, 0.84);
+    --text-muted-alt-86: rgba(156, 163, 175, 0.86);
+    --specs-modal-close-color: rgba(156, 163, 175, 0.82);
+    --input-focus-shadow: rgba(227, 6, 19, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-btn-dark: rgba(123, 123, 123, 0.9);
+    --text-btn-dark: rgba(156, 163, 175, 0.9);
+    --contact-card-bg: rgba(23, 23, 23, 0.65);
+    --contact-card-bg-hover: rgba(23, 23, 23, 0.75);
+    --accent-red-hover: rgba(227, 6, 19, 0.9);
+    --line-wireframe: rgba(156, 163, 175, 0.78);
+    --arrow-bg: rgba(156, 163, 175, 0.78);
+
+
+
+    
+    /* ==========================================
        TRANSITIONS & ANIMATIONS
        ========================================== */
     --transition-fast: 180ms ease;

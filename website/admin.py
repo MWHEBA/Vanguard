@@ -53,6 +53,8 @@ class SiteSettingsAdmin(admin.ModelAdmin):
                 "logo",
                 "favicon_path",
                 "favicon",
+                "social_image_path",
+                "social_image",
             )
         }),
         ("Timestamps", {"fields": ("created_at", "updated_at")}),

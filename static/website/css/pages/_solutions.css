@@ -17,6 +17,7 @@
     justify-content: center;
     gap: clamp(12px, 2vw, 28px);
     padding-inline: clamp(24px, 5vw, 88px);
+    padding-block: clamp(20px, 3vh, 40px);
 }
 
 /* ==========================================
@@ -46,6 +47,7 @@
 .solutions-map {
     width: clamp(520px, 58vw, 820px);
     aspect-ratio: 1000 / 820;
+    max-height: 100%;
     position: relative;
     top: auto;
     left: auto;

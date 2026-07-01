@@ -9,8 +9,8 @@
 <section class="panel form-panel">
     <div class="panel-heading">
         <div>
-            <h2>Logo & Favicon</h2>
-            <p class="panel-subtitle">Upload your website logo and favicon. Supports webp, png, ico, and svg formats.</p>
+            <h2>Logo, Favicon & Social Preview</h2>
+            <p class="panel-subtitle">Upload your website logo, favicon, and social preview image. Supports webp, png, jpg, jpeg, ico, and svg formats.</p>
         </div>
         <a class="button secondary" href="{% url 'home' %}">View public site</a>
     </div>
@@ -61,6 +61,28 @@
                     {{ form.favicon.errors }}
                 </div>
             </div>
+
+            <div>
+                <div class="gallery-dropzone primary-image-dropzone" data-social-branding-dropzone>
+                    <input id="social-branding-input" name="social_image" type="file" accept=".webp,.png,.jpg,.jpeg,.svg,image/webp,image/png,image/jpeg,image/svg+xml" hidden data-social-branding-input>
+                    <label for="social-branding-input">
+                        <div class="primary-image-preview" data-social-branding-preview>
+                            {% if social_image_url %}
+                                {% if social_image_url|slice:"-4:"|lower == ".svg" %}
+                                    <div class="svg-preview-placeholder"><span class="svg-icon">SVG</span></div>
+                                {% else %}
+                                    <img src="{{ social_image_url }}" alt="Social share image">
+                                {% endif %}
+                            {% else %}
+                                <span>Drop social preview here</span>
+                            {% endif %}
+                        </div>
+                        <strong>Drop social preview here</strong>
+                        <span>or select a file to update social preview (1200x630)</span>
+                    </label>
+                    {{ form.social_image.errors }}
+                </div>
+            </div>
         </div>
         <div class="sticky-actions">
             <button class="button" type="submit">Save branding</button>
@@ -71,9 +93,15 @@
 <style>
 .branding-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     margin-bottom: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .branding-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (max-width: 768px) {

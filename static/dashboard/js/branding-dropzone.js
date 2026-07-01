@@ -1,15 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const logoDropzone = document.querySelector("[data-logo-branding-dropzone]");
     const faviconDropzone = document.querySelector("[data-favicon-branding-dropzone]");
+    const socialDropzone = document.querySelector("[data-social-branding-dropzone]");
     
-    if (!logoDropzone && !faviconDropzone) {
+    if (!logoDropzone && !faviconDropzone && !socialDropzone) {
         return;
     }
 
     const logoInput = document.querySelector("[data-logo-branding-input]");
     const faviconInput = document.querySelector("[data-favicon-branding-input]");
+    const socialInput = document.querySelector("[data-social-branding-input]");
     const logoPreview = document.querySelector("[data-logo-branding-preview]");
     const faviconPreview = document.querySelector("[data-favicon-branding-preview]");
+    const socialPreview = document.querySelector("[data-social-branding-preview]");
 
     // الدالة دي بتتحقق إذا كان الملف أو الرابط لملف svg
     const isSvg = (fileOrUrl) => {
@@ -75,6 +78,68 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         reader.readAsDataURL(fileOrUrl);
     };
+
+    const setSocialPreview = (fileOrUrl) => {
+        if (!socialPreview) {
+            return;
+        }
+        if (isSvg(fileOrUrl)) {
+            socialPreview.innerHTML = getPreviewHtml(fileOrUrl);
+            return;
+        }
+        if (typeof fileOrUrl === "string") {
+            socialPreview.innerHTML = getPreviewHtml(fileOrUrl);
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+            socialPreview.innerHTML = `<img src="${escapeHtml(reader.result)}" alt="">`;
+        };
+        reader.readAsDataURL(fileOrUrl);
+    };
+
+    // Social dropzone
+    if (socialDropzone && socialInput) {
+        socialDropzone.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            socialDropzone.classList.add("is-dragover");
+        });
+
+        socialDropzone.addEventListener("dragleave", () => {
+            socialDropzone.classList.remove("is-dragover");
+        });
+
+        socialDropzone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            socialDropzone.classList.remove("is-dragover");
+            const file = event.dataTransfer.files[0];
+            if (!file) return;
+            const ext = file.name.split('.').pop().toLowerCase();
+            
+            if (!['webp', 'png', 'jpg', 'jpeg', 'svg'].includes(ext)) {
+                alert(`Warning: The file "${file.name}" is not supported. Only webp, png, jpg, jpeg, and svg are supported for social preview.`);
+                return;
+            }
+
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            socialInput.files = dataTransfer.files;
+            setSocialPreview(file);
+        });
+
+        socialInput.addEventListener("change", () => {
+            const file = socialInput.files[0];
+            if (file) {
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (!['webp', 'png', 'jpg', 'jpeg', 'svg'].includes(ext)) {
+                    alert(`Warning: The file "${file.name}" is not supported. Only webp, png, jpg, jpeg, and svg are supported for social preview.`);
+                    socialInput.value = "";
+                    return;
+                }
+                setSocialPreview(file);
+            }
+        });
+    }
 
     // Logo dropzone
     if (logoDropzone && logoInput) {

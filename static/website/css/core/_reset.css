@@ -83,8 +83,8 @@ body {
 
 
 .main-content {
-    flex-grow: 1;
-    height: calc(100vh - 140px);
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     position: relative;
     z-index: var(--z-content);

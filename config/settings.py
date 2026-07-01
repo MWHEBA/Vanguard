@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -133,12 +134,14 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-STATIC_ROOT = os.environ.get("STATIC_ROOT", BASE_DIR / "staticfiles")
-
-
+if DEBUG:
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+    MEDIA_ROOT = BASE_DIR / "media"
+else:
+    STATIC_ROOT = os.environ.get("STATIC_ROOT", BASE_DIR / "staticfiles")
+    MEDIA_ROOT = os.environ.get("MEDIA_ROOT", BASE_DIR / "media")
 
 MEDIA_URL = "media/"
-MEDIA_ROOT = os.environ.get("MEDIA_ROOT", BASE_DIR / "media")
 
 
 # Default primary key field type

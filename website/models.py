@@ -37,6 +37,8 @@ class SiteSettings(models.Model):
     logo = models.FileField(upload_to="site-branding/", blank=True)
     favicon_path = models.CharField(max_length=255, blank=True)
     favicon = models.FileField(upload_to="site-branding/", blank=True)
+    social_image_path = models.CharField(max_length=255, blank=True)
+    social_image = models.FileField(upload_to="site-branding/", blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

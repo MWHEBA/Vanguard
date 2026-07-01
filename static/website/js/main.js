@@ -245,6 +245,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!specsModal) return;
         specsModal.classList.remove("is-open");
         specsModal.setAttribute("aria-hidden", "true");
+        
+        // Clean up open dropdown in the specs modal
+        const openDropdown = specsModal.querySelector(".country-dropdown");
+        if (openDropdown) {
+            openDropdown.parentElement.removeChild(openDropdown);
+        }
+        specsModal.style.overflowY = "auto";
     };
 
     specsButtons.forEach(btn => btn.addEventListener("click", () => openSpecsModal(btn.dataset.specsProduct, btn.dataset.specsSlug)));
@@ -481,12 +488,23 @@ document.addEventListener("DOMContentLoaded", () => {
             modalCountrySelector.parentElement.appendChild(dropdown);
             renderList(allCountries);
             setTimeout(() => searchInput?.focus(), 100);
+
+            // Prevent specs-modal from scrolling when dropdown is open
+            const specsModal = document.querySelector("[data-specs-modal]");
+            if (specsModal) {
+                specsModal.style.overflowY = "hidden";
+            }
         };
 
         const closeDropdown = () => {
             if (dropdown?.parentElement) {
                 dropdown.parentElement.removeChild(dropdown);
                 dropdown = searchInput = null;
+            }
+            // Restore scrolling on specs-modal
+            const specsModal = document.querySelector("[data-specs-modal]");
+            if (specsModal) {
+                specsModal.style.overflowY = "auto";
             }
         };
 

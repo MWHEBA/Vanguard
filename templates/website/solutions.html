@@ -13,36 +13,40 @@
 
     <div class="solutions-map" aria-label="Vanguard solutions map">
         <svg class="solutions-wireframe-svg" viewBox="0 0 1000 820" aria-label="Vanguard solutions map">
-            <g class="solution-panels">
-                {% for item in solution_map_items %}
-                    <a class="{{ item.link_class }}" href="{% url item.url_name %}" aria-label="{{ item.title }}">
-                        <polygon class="solution-panel" points="{{ item.polygon_points }}" />
-                    </a>
-                {% endfor %}
-            </g>
-            <g class="solutions-wire-lines">
-                <polyline points="505,146 795,205 893,499 704,734 415,674 315,376 505,146" />
-                <line x1="505" y1="146" x2="438" y2="404" />
-                <line x1="315" y1="376" x2="438" y2="404" />
-                <line x1="438" y1="404" x2="415" y2="674" />
-                <line x1="438" y1="404" x2="711" y2="302" />
-                <line x1="505" y1="146" x2="711" y2="302" />
-                <line x1="795" y1="205" x2="711" y2="302" />
-                <line x1="711" y1="302" x2="893" y2="499" />
-                <line x1="438" y1="404" x2="660" y2="604" />
-                <line x1="415" y1="674" x2="660" y2="604" />
-                <line x1="660" y1="604" x2="704" y2="734" />
-                <line x1="711" y1="302" x2="660" y2="604" />
-                <line x1="660" y1="604" x2="893" y2="499" />
-            </g>
-            <g class="solution-svg-labels">
-                {% for item in solution_map_items %}
-                    <text class="solution-svg-label {{ item.label_class }}" x="{{ item.label_x }}" y="{{ item.label_y }}">
-                        {% for line in item.label_lines %}
-                            <tspan x="{{ item.label_x }}" dy="{% if forloop.first %}0{% else %}37{% endif %}">{{ line }}</tspan>
-                        {% endfor %}
-                    </text>
-                {% endfor %}
+            <g class="solutions-wireframe-group">
+                <g class="solution-panels">
+                    {% for item in solution_map_items %}
+                        <a class="{{ item.link_class }}" href="{% url item.url_name %}" aria-label="{{ item.title }}">
+                            <polygon class="solution-panel" points="{{ item.polygon_points }}" />
+                        </a>
+                    {% endfor %}
+                </g>
+                <g class="solutions-wire-lines">
+                    <polyline points="505,146 795,205 893,499 704,734 415,674 315,376 505,146" />
+                    <line x1="505" y1="146" x2="438" y2="404" />
+                    <line x1="315" y1="376" x2="438" y2="404" />
+                    <line x1="438" y1="404" x2="415" y2="674" />
+                    <line x1="438" y1="404" x2="711" y2="302" />
+                    <line x1="505" y1="146" x2="711" y2="302" />
+                    <line x1="795" y1="205" x2="711" y2="302" />
+                    <line x1="711" y1="302" x2="893" y2="499" />
+                    <line x1="438" y1="404" x2="660" y2="604" />
+                    <line x1="415" y1="674" x2="660" y2="604" />
+                    <line x1="660" y1="604" x2="704" y2="734" />
+                    <line x1="711" y1="302" x2="660" y2="604" />
+                    <line x1="660" y1="604" x2="893" y2="499" />
+                </g>
+                <g class="solution-svg-labels">
+                    {% for item in solution_map_items %}
+                        <a class="{{ item.link_class }}" href="{% url item.url_name %}" aria-label="{{ item.title }}">
+                            <text class="solution-svg-label {{ item.label_class }}" x="{{ item.label_x }}" y="{{ item.label_y }}">
+                                {% for line in item.label_lines %}
+                                    <tspan x="{{ item.label_x }}" dy="{% if forloop.first %}0{% else %}37{% endif %}">{{ line }}</tspan>
+                                {% endfor %}
+                            </text>
+                        </a>
+                    {% endfor %}
+                </g>
             </g>
         </svg>
     </div>

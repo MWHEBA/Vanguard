@@ -148,11 +148,11 @@ class Command(BaseCommand):
         solution_count = 0
         visual_count = 0
 
-        HomePageContent.objects.update_or_create(
+        HomePageContent.objects.get_or_create(
             key=HOME_PAGE_CONTENT["key"],
             defaults=HOME_PAGE_CONTENT,
         )
-        SiteSettings.objects.update_or_create(
+        SiteSettings.objects.get_or_create(
             key=SITE_SETTINGS["key"],
             defaults=SITE_SETTINGS,
         )
@@ -164,29 +164,27 @@ class Command(BaseCommand):
                 for key, value in item.items()
                 if key != "visuals"
             }
-            solution, _ = Solution.objects.update_or_create(
+            solution, created = Solution.objects.get_or_create(
                 slug=item["slug"],
                 defaults={**solution_defaults, "is_active": True},
             )
             solution_count += 1
 
-            active_image_paths = []
-            for index, (title, caption, image_path) in enumerate(visuals, start=1):
-                SolutionVisual.objects.update_or_create(
-                    solution=solution,
-                    image_path=image_path,
-                    defaults={
-                        "title": title,
-                        "caption": caption,
-                        "sort_order": index * 10,
-                        "is_active": True,
-                    },
-                )
-                active_image_paths.append(image_path)
-                visual_count += 1
-
-            if active_image_paths:
-                solution.visuals.exclude(image_path__in=active_image_paths).update(is_active=False)
+            if created:
+                active_image_paths = []
+                for index, (title, caption, image_path) in enumerate(visuals, start=1):
+                    SolutionVisual.objects.get_or_create(
+                        solution=solution,
+                        image_path=image_path,
+                        defaults={
+                            "title": title,
+                            "caption": caption,
+                            "sort_order": index * 10,
+                            "is_active": True,
+                        },
+                    )
+                    active_image_paths.append(image_path)
+                    visual_count += 1
 
         self.stdout.write(
             self.style.SUCCESS(

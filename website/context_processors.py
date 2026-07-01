@@ -13,6 +13,7 @@ def site_settings(request):
             "site_settings": None,
             "site_logo_url": staticfiles_storage.url("website/images/Icon.png"),
             "site_favicon_url": staticfiles_storage.url("website/images/Icon.png"),
+            "site_social_image_url": staticfiles_storage.url("website/images/Home.png"),
         }
 
     logo_url = ""
@@ -27,8 +28,19 @@ def site_settings(request):
     elif settings.favicon_path:
         favicon_url = staticfiles_storage.url(settings.favicon_path)
 
+    social_image_url = ""
+    if settings.social_image:
+        social_image_url = settings.social_image.url
+    elif settings.social_image_path:
+        social_image_url = staticfiles_storage.url(settings.social_image_path)
+    elif logo_url:
+        social_image_url = logo_url
+    else:
+        social_image_url = staticfiles_storage.url("website/images/Home.png")
+
     return {
         "site_settings": settings,
         "site_logo_url": logo_url,
         "site_favicon_url": favicon_url,
+        "site_social_image_url": social_image_url,
     }

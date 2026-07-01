@@ -1,6 +1,51 @@
 {% extends "website/base.html" %}
 
 {% block title %}{{ solution.title }}{% endblock %}
+
+{% block meta_tags %}
+<meta name="description" content="{{ solution.description|striptags|truncatewords:30 }}">
+
+<!-- Open Graph / Facebook / WhatsApp -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:title" content="{% if site_settings %}{{ site_settings.site_name }}{% else %}Vanguard Technologies{% endif %} | {{ solution.title }}">
+<meta property="og:description" content="{{ solution.description|striptags|truncatewords:30 }}">
+{% if solution.image %}
+    {% if "http" in solution.image %}
+        <meta property="og:image" content="{{ solution.image }}">
+    {% else %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ solution.image }}">
+    {% endif %}
+{% elif site_social_image_url %}
+    {% if "http" in site_social_image_url %}
+        <meta property="og:image" content="{{ site_social_image_url }}">
+    {% else %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_social_image_url }}">
+    {% endif %}
+{% endif %}
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+<meta name="twitter:title" content="{% if site_settings %}{{ site_settings.site_name }}{% else %}Vanguard Technologies{% endif %} | {{ solution.title }}">
+<meta name="twitter:description" content="{{ solution.description|striptags|truncatewords:30 }}">
+{% if solution.image %}
+    {% if "http" in solution.image %}
+        <meta name="twitter:image" content="{{ solution.image }}">
+    {% else %}
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ solution.image }}">
+    {% endif %}
+{% elif site_social_image_url %}
+    {% if "http" in site_social_image_url %}
+        <meta name="twitter:image" content="{{ site_social_image_url }}">
+    {% else %}
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_social_image_url }}">
+    {% endif %}
+{% endif %}
+{% endblock %}
+
 {% block page_class %}service-detail-page service-detail-{{ solution.id }}{% endblock %}
 
 {% block content %}

@@ -19,16 +19,22 @@
 
 /* Solution Panels (Interactive Areas) */
 .solution-panel {
-    fill: rgba(139, 139, 139, 0);
+    fill: var(--transparent);
     stroke: none;
     cursor: pointer;
     pointer-events: all;
     transition: fill var(--transition-fast);
 }
 
-.solution-panels a:hover .solution-panel,
-.solution-panels a:focus-visible .solution-panel {
-    fill: rgba(139, 139, 139, 0.96);
+.solutions-wireframe-svg:has(.solution-link-vulture:hover) .solution-panels .solution-link-vulture .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-vulture:focus-visible) .solution-panels .solution-link-vulture .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-skyguard:hover) .solution-panels .solution-link-skyguard .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-skyguard:focus-visible) .solution-panels .solution-link-skyguard .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-tdl:hover) .solution-panels .solution-link-tdl .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-tdl:focus-visible) .solution-panels .solution-link-tdl .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-vancom:hover) .solution-panels .solution-link-vancom .solution-panel,
+.solutions-wireframe-svg:has(.solution-link-vancom:focus-visible) .solution-panels .solution-link-vancom .solution-panel {
+    fill: var(--overlay-panel);
 }
 
 .solution-panels a:focus-visible {
@@ -39,7 +45,7 @@
 /* Wireframe Lines */
 .solutions-wire-lines {
     fill: none;
-    stroke: rgba(129, 129, 129, 0.92);
+    stroke: var(--line-map);
     stroke-width: 3;
     stroke-linecap: square;
     stroke-linejoin: miter;
@@ -50,14 +56,14 @@
    SVG TEXT LABELS
    ========================================== */
 .solution-svg-labels {
-    color: rgba(255, 255, 255, 1);
+    color: var(--text-white);
     font-family: 'Cairo', sans-serif;
     font-size: 24px;
     font-weight: 600;
     fill: currentColor;
     text-anchor: middle;
     dominant-baseline: middle;
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 .solution-svg-label {
@@ -84,7 +90,7 @@
    ========================================== */
 .service-wire {
     fill: none;
-    stroke: rgba(156, 163, 175, 0.78);
+    stroke: var(--line-wireframe);
     stroke-width: 1;
     vector-effect: non-scaling-stroke;
 }
@@ -119,7 +125,7 @@
 }
 
 .fallback-path:hover {
-    fill: rgba(227, 6, 19, 0.05);
+    fill: var(--fallback-hover-bg);
     stroke: var(--system-hover-stroke);
     stroke-width: 1.5;
 }

@@ -19,7 +19,7 @@
     }
     
     .logo-container img {
-        width: 220px;
+        width: 180px;
         height: auto;
     }
     
@@ -153,19 +153,7 @@
         transform: translateX(-50%);
     }
     
-    .service-detail-vulture_uavs .service-detail,
-    .service-detail-skyguard .service-detail,
-    .service-detail-tactical_data_link .service-detail {
-        grid-template-columns: 1fr;
-        padding-top: 48px;
-    }
-    
-    .service-detail-vulture_uavs .service-detail-description,
-    .service-detail-skyguard .service-detail-description,
-    .service-detail-tactical_data_link .service-detail-description {
-        width: 100%;
-        max-width: 100%;
-    }
+
     
     .service-detail-carousel {
         width: 100%;
@@ -284,7 +272,7 @@
     }
     
     .logo-container img {
-        width: 200px;
+        width: 165px;
         height: auto;
     }
     
@@ -419,12 +407,7 @@
         transform: translateX(-50%);
     }
     
-    .service-detail-vulture_uavs .service-detail,
-    .service-detail-skyguard .service-detail,
-    .service-detail-tactical_data_link .service-detail {
-        grid-template-columns: 1fr;
-        padding-top: 40px;
-    }
+
     
     .service-detail-carousel {
         width: 100%;

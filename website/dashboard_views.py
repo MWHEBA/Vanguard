@@ -360,12 +360,19 @@ def branding(request):
     elif site_settings.favicon_path:
         favicon_url = staticfiles_storage.url(site_settings.favicon_path)
 
+    social_image_url = ""
+    if site_settings.social_image:
+        social_image_url = site_settings.social_image.url
+    elif site_settings.social_image_path:
+        social_image_url = staticfiles_storage.url(site_settings.social_image_path)
+
     return render(request, "dashboard/branding.html", {
         "current_dashboard_page": "branding",
         "form": form,
         "settings_object": site_settings,
         "logo_url": logo_url,
         "favicon_url": favicon_url,
+        "social_image_url": social_image_url,
     })
 
 

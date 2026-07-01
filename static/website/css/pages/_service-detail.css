@@ -8,23 +8,20 @@
    SERVICE DETAIL PAGE BASE
    ========================================== */
 .service-detail-page {
-    background-color: #171717;
+    background-color: var(--bg-primary);
     justify-content: flex-start;
 }
 
-.service-detail-page .main-content {
-    height: calc(100vh - 140px);
-}
 
 .service-detail {
     width: 100%;
     height: 100%;
     position: relative;
     display: grid;
-    grid-template-columns: minmax(420px, 589px) minmax(439px, 1fr);
+    grid-template-columns: minmax(420px, 650px) minmax(440px, 1fr);
     align-items: start;
-    column-gap: clamp(48px, 7.5vw, 108px);
-    padding: 105px 32px 0 48px;
+    column-gap: clamp(40px, 6vw, 96px);
+    padding: 86px 32px 0 48px;
 }
 
 /* ==========================================
@@ -32,22 +29,35 @@
    ========================================== */
 .service-detail-copy {
     width: 100%;
-    max-width: 589px;
+    max-width: 650px;
     display: flex;
     flex-direction: column;
 }
 
+.service-actions-desktop {
+    display: flex;
+    gap: 20px;
+    margin-top: clamp(28px, 7vh, 84px);
+    width: 100%;
+}
+
+.service-actions-desktop .primary-btn,
+.service-actions-desktop .service-secondary-btn {
+    margin-top: 0;
+}
+
 .service-detail-heading {
-    width: 189px;
-    height: 63px;
+    width: 100%;
+    max-width: max-content;
+    height: auto;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .service-detail-logo {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 189px;
+    height: 63px;
     object-fit: contain;
 }
 
@@ -59,12 +69,13 @@
     line-height: 1;
     letter-spacing: 0;
     text-transform: uppercase;
+    margin: 0;
 }
 
 .service-detail-description {
-    width: 589px;
-    margin-top: 26px;
-    color: rgba(156, 163, 175, 1);
+    width: 100%;
+    margin-top: 32px;
+    color: var(--text-muted-alt);
     font-family: 'Cairo', sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -98,9 +109,9 @@
     position: absolute;
     top: 440px;
     left: 226px;
-    border: 1px solid rgba(156, 163, 175, 0.55);
-    background: rgba(255, 255, 255, 0.04);
-    color: rgba(156, 163, 175, 0.75);
+    border: 1px solid var(--btn-border-muted);
+    background: var(--btn-hover-bg-soft);
+    color: var(--text-muted-alt);
     font-family: 'Cairo', sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -117,19 +128,9 @@
 /* ==========================================
    VULTURE UAV SPECIFIC STYLES
    ========================================== */
-.service-detail-vulture_uavs .service-detail {
-    grid-template-columns: minmax(520px, 650px) minmax(520px, 1fr);
-    column-gap: clamp(40px, 6vw, 96px);
-    padding-top: 86px;
-}
-
-.service-detail-vulture_uavs .service-detail-copy {
-    max-width: 650px;
-}
-
 .service-detail-vulture_uavs .service-detail-heading {
-    width: 208px;
-    height: 74px;
+    width: auto;
+    height: auto;
     border: 0;
     justify-content: flex-start;
 }
@@ -141,6 +142,7 @@
     font-weight: 700 !important;
     line-height: 0.9 !important;
     text-align: center;
+    margin: 0;
 }
 
 .service-vulture-title span,
@@ -156,27 +158,12 @@
     padding-left: 0.55em;
 }
 
-.service-detail-vulture_uavs .service-detail-description {
-    margin-top: 27px;
-    width: 650px;
-}
-
 /* ==========================================
    SKYGUARD SPECIFIC STYLES
    ========================================== */
-.service-detail-skyguard .service-detail {
-    grid-template-columns: minmax(520px, 650px) minmax(520px, 1fr);
-    column-gap: clamp(40px, 6vw, 96px);
-    padding-top: 86px;
-}
-
-.service-detail-skyguard .service-detail-copy {
-    max-width: 650px;
-}
-
 .service-detail-skyguard .service-detail-heading {
     width: auto;
-    height: 74px;
+    height: auto;
     border: 0;
     justify-content: flex-start;
 }
@@ -188,31 +175,17 @@
     font-weight: 700;
     line-height: 1;
     text-transform: none;
-}
-
-.service-detail-skyguard .service-detail-description {
-    margin-top: 27px;
-    width: 650px;
+    margin: 0;
 }
 
 /* ==========================================
    TACTICAL DATA LINK SPECIFIC STYLES
    ========================================== */
-.service-detail-tactical_data_link .service-detail {
-    grid-template-columns: minmax(520px, 650px) minmax(520px, 1fr);
-    column-gap: clamp(40px, 6vw, 96px);
-    padding-top: 86px;
-}
-
-.service-detail-tactical_data_link .service-detail-copy {
-    max-width: 650px;
-}
-
 .service-detail-tactical_data_link .service-detail-heading {
-    width: 230px;
-    height: 105px;
+    width: auto;
+    height: auto;
     border: 0;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .service-tactical-title {
@@ -222,6 +195,7 @@
     line-height: 0.78 !important;
     text-align: center;
     text-transform: none !important;
+    margin: 0;
 }
 
 .service-tactical-title span,
@@ -237,21 +211,19 @@
     font-size: 24px;
 }
 
-.service-detail-tactical_data_link .service-detail-description {
-    width: 650px;
-}
+@media (min-width: 1024px) {
+    .service-detail-tactical_data_link .service-detail-visual img {
+        width: 474px;
+        height: 369px;
+        top: 34px;
+        left: 72px;
+        opacity: 0.56;
+    }
 
-.service-detail-tactical_data_link .service-detail-visual img {
-    width: 474px;
-    height: 369px;
-    top: 34px;
-    left: 72px;
-    opacity: 0.56;
-}
-
-.service-detail-tactical_data_link .service-specs-btn {
-    top: 430px;
-    left: 246px;
+    .service-detail-tactical_data_link .service-specs-btn {
+        top: 430px;
+        left: 246px;
+    }
 }
 
 /* ==========================================
@@ -329,12 +301,14 @@
     opacity: 0.5;
 }
 
-.service-detail-skyguard .service-detail-carousel .service-carousel-image {
-    width: 360px;
-    height: 420px;
-    top: 12px;
-    left: 120px;
-    opacity: 0.68;
+@media (min-width: 1024px) {
+    .service-detail-skyguard .service-detail-carousel .service-carousel-image {
+        width: 360px;
+        height: 420px;
+        top: 12px;
+        left: 120px;
+        opacity: 0.68;
+    }
 }
 
 /* ==========================================
@@ -345,7 +319,7 @@
     top: 462px;
     left: 0;
     width: 100%;
-    color: rgba(156, 163, 175, 1);
+    color: var(--text-muted-alt);
     font-family: 'Cairo', sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -359,7 +333,7 @@
     top: 500px;
     border: 0;
     border-radius: 50%;
-    background: rgba(156, 163, 175, 0.78);
+    background: var(--arrow-bg);
     color: var(--text-white);
     font-family: Arial, sans-serif;
     font-size: 32px;
@@ -409,3 +383,35 @@
     top: 541px;
     left: 226px;
 }
+
+/* Responsive visibility controls for OUR SOLUTIONS buttons */
+.service-btn-desktop {
+    display: inline-flex;
+}
+
+.service-btn-mobile {
+    display: none;
+}
+
+@media (max-width: 1023px) {
+    .service-btn-desktop {
+        display: none !important;
+    }
+    
+    .service-btn-mobile {
+        display: inline-flex !important;
+    }
+}
+
+/* VANCOM Specific spacing adjustment to compensate for visual logo scaling */
+.service-detail-vancom .service-detail-description {
+    margin-top: 42px;
+}
+
+@media (max-width: 599px) {
+    .service-detail-vancom .service-detail-description {
+        margin-top: 28px;
+    }
+}
+
+

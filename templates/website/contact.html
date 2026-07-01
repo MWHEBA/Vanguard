@@ -55,7 +55,9 @@
                     <!-- علم مصر -->
                     <span class="fi fi-eg"></span>
                     <span class="country-prefix">+20</span>
-                    <span class="country-caret">v</span>
+                    <svg class="country-caret" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 2px; flex-shrink: 0;">
+                        <path d="M1 1L4 4L7 1" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
                 <div class="contact-field-wrapper">
                     {{ form.phone }}
@@ -81,6 +83,17 @@
                     </svg>
                 </a>
             </div>
+            {% if site_settings.contact_email %}
+            <div class="contact-email-container">
+                <a href="mailto:{{ site_settings.contact_email }}" class="contact-email-link">
+                    <svg class="contact-email-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                    </svg>
+                    <span>{{ site_settings.contact_email }}</span>
+                </a>
+            </div>
+            {% endif %}
             <button type="submit" class="submit-btn-rect">SEND</button>
         </div>
     </form>
@@ -93,14 +106,6 @@
     <div class="illustration-container contact-illustration-container">
         <img src="{% static 'website/images/v2070_311.png' %}" alt="Operations Map" class="contact-map-image" />
     </div>
-</div>
-{% endblock %}
-
-{% block footer_copyright %}
-<div class="contact-footer-info">
-    <div>INFO@VANGUARD.EG</div>
-    <div>ALL RIGHTS RESERVED 2026</div>
-    <div>VANGUARD TECHNOLOGIES.</div>
 </div>
 {% endblock %}
 

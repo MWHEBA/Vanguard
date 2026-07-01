@@ -190,6 +190,7 @@ class SiteBrandingDashboardForm(DashboardFormMixin, forms.ModelForm):
         fields = (
             "logo",
             "favicon",
+            "social_image",
         )
         widgets = {
             "logo": forms.ClearableFileInput(attrs={
@@ -207,6 +208,14 @@ class SiteBrandingDashboardForm(DashboardFormMixin, forms.ModelForm):
                 "accept": ".ico,.png,.svg,image/png,image/svg+xml,image/x-icon",
                 "hidden": "true",
                 "data-favicon-branding-input": "",
+            }),
+            "social_image": forms.ClearableFileInput(attrs={
+                "id": "social-branding-input",
+                "name": "social_image",
+                "type": "file",
+                "accept": ".webp,.png,.jpg,.jpeg,.svg,image/webp,image/png,image/jpeg,image/svg+xml",
+                "hidden": "true",
+                "data-social-branding-input": "",
             }),
         }
 
@@ -230,12 +239,22 @@ class SiteBrandingDashboardForm(DashboardFormMixin, forms.ModelForm):
                 raise forms.ValidationError("Only ico, png, and svg files are allowed for favicon.")
         return favicon
 
+    def clean_social_image(self):
+        social_image = self.cleaned_data.get("social_image")
+        if social_image:
+            ext = social_image.name.split(".")[-1].lower() if "." in social_image.name else ""
+            if ext not in {"webp", "png", "jpg", "jpeg", "svg"}:
+                raise forms.ValidationError("Only webp, png, jpg, jpeg, and svg files are allowed for social preview image.")
+        return social_image
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         if self.cleaned_data.get("logo"):
             instance.logo_path = ""
         if self.cleaned_data.get("favicon"):
             instance.favicon_path = ""
+        if self.cleaned_data.get("social_image"):
+            instance.social_image_path = ""
         if commit:
             instance.save()
             self.save_m2m()

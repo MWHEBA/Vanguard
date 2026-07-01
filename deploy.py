@@ -213,9 +213,41 @@ class DeploymentManager:
         except Exception:
             pass
 
-    def get_modified_files(self):
-        """Identify modified or new files by comparing with server"""
-        print("[Scan] Scanning local and remote directories...")
+    def get_modified_files(self, force_remote=False):
+        """Identify modified or new files by comparing with local hashes or server"""
+        if not force_remote and self.hash_file.exists():
+            print("[Scan] Scanning locally using .deploy_hashes.json (Fast Mode)...")
+            try:
+                with open(self.hash_file, 'r', encoding='utf-8') as f:
+                    previous_hashes = json.load(f)
+            except Exception as e:
+                print(f"[Warning] Failed to read local hash file: {e}. Falling back to remote scan.")
+                previous_hashes = None
+            
+            if previous_hashes is not None:
+                local_files = self.get_all_files()
+                modified_files = []
+                new_count = 0
+                modified_count = 0
+                for file_path in local_files:
+                    relative_path = str(file_path.relative_to(self.project_root)).replace('\\', '/')
+                    current_hash = self.get_file_hash(file_path)
+                    if relative_path not in previous_hashes:
+                        modified_files.append(file_path)
+                        new_count += 1
+                    elif previous_hashes[relative_path] != current_hash:
+                        modified_files.append(file_path)
+                        modified_count += 1
+                
+                total_modified = len(modified_files)
+                if total_modified > 0:
+                    print(f"[Scan] Found {total_modified} files to upload ({new_count} new, {modified_count} modified) [Fast Mode].")
+                else:
+                    print("[OK] All files are up-to-date according to local hashes.")
+                return modified_files
+
+        # Fallback/Remote scan mode
+        print("[Scan] Scanning local and remote directories on server (this might take a moment)...")
         try:
             ssh = self._create_ssh_connection()
             sftp = ssh.open_sftp()
@@ -301,26 +333,14 @@ class DeploymentManager:
             for i, file_path in enumerate(files):
                 if not file_path.exists():
                     skipped_count += 1
+                    # Show progress bar (ASCII only) for skipped files
+                    percentage = ((i + 1) / total_files) * 100
+                    bar = '#' * int(25 * (i + 1) // total_files) + '-' * (25 - int(25 * (i + 1) // total_files))
+                    print(f"\r[{bar}] {percentage:.1f}% - Uploaded: {uploaded_count}, Skipped: {skipped_count}", end='', flush=True)
                     continue
                 
                 relative_path = str(file_path.relative_to(self.project_root)).replace('\\', '/')
                 remote_file = f"{self.remote_path}/{relative_path}"
-                
-                # Check if we should skip
-                if not overwrite_all:
-                    try:
-                        remote_stat = sftp.stat(remote_file)
-                        local_stat = file_path.stat()
-                        if remote_stat.st_size == local_stat.st_size:
-                            skipped_count += 1
-                            continue
-                    except Exception:
-                        pass
-                
-                # Show progress bar (ASCII only)
-                percentage = ((i + 1) / total_files) * 100
-                bar = '#' * int(25 * (i + 1) // total_files) + '-' * (25 - int(25 * (i + 1) // total_files))
-                print(f"\r[{bar}] {percentage:.1f}% - Uploaded: {uploaded_count}, Skipped: {skipped_count}", end='', flush=True)
                 
                 try:
                     self._create_remote_directories(sftp, remote_file)
@@ -328,6 +348,11 @@ class DeploymentManager:
                     uploaded_count += 1
                 except Exception as e:
                     print(f"\n[Warning] Error uploading {relative_path}: {e}")
+
+                # Show progress bar (ASCII only) after upload completes
+                percentage = ((i + 1) / total_files) * 100
+                bar = '#' * int(25 * (i + 1) // total_files) + '-' * (25 - int(25 * (i + 1) // total_files))
+                print(f"\r[{bar}] {percentage:.1f}% - Uploaded: {uploaded_count}, Skipped: {skipped_count}", end='', flush=True)
             
             print()
             sftp.close()
@@ -360,8 +385,15 @@ class DeploymentManager:
             ssh = self._create_ssh_connection()
             sftp = ssh.open_sftp()
             try:
-                sftp.put(str(self.project_root / ".env"), f"{self.remote_path}/.env")
-                print("  [OK] Uploaded .env file to server.")
+                import io
+                with open(self.project_root / ".env", 'r', encoding='utf-8') as f:
+                    env_content = f.read()
+                prod_env_content = env_content.replace("DEBUG=True", "DEBUG=False")
+                
+                # Upload using putfo
+                env_file_obj = io.BytesIO(prod_env_content.encode('utf-8'))
+                sftp.putfo(env_file_obj, f"{self.remote_path}/.env")
+                print("  [OK] Uploaded .env file to server (forced DEBUG=False).")
             except Exception as e:
                 print(f"  [Warning] Failed to upload .env: {e}")
             sftp.close()
@@ -387,7 +419,7 @@ class DeploymentManager:
         except Exception as e:
             print(f"[Warning] Failed running post-deployment commands: {e}")
 
-    def deploy(self, all_files=False):
+    def deploy(self, all_files=False, force_remote=False):
         """Main deploy execution"""
         if not self.test_connection():
             return False
@@ -395,7 +427,7 @@ class DeploymentManager:
         if all_files:
             files_to_deploy = self.get_all_files()
         else:
-            files_to_deploy = self.get_modified_files()
+            files_to_deploy = self.get_modified_files(force_remote=force_remote)
             
         if not files_to_deploy:
             print("[OK] Production files are already up-to-date.")
@@ -431,6 +463,8 @@ def main():
     )
     parser.add_argument('--mode', choices=['test', 'deploy', 'deploy-all'], default='deploy',
                         help='Deploy mode (test: test credentials, deploy: delta deploy, deploy-all: upload all files)')
+    parser.add_argument('--remote', action='store_true',
+                        help='Force scanning the remote server instead of using local hashes')
     args = parser.parse_args()
 
     try:
@@ -438,7 +472,7 @@ def main():
         if args.mode == 'test':
             manager.test_connection()
         elif args.mode == 'deploy':
-            manager.deploy(all_files=False)
+            manager.deploy(all_files=False, force_remote=args.remote)
         elif args.mode == 'deploy-all':
             manager.deploy(all_files=True)
     except KeyboardInterrupt:
